@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "353683293917",
+    "project_id": "fin-calcu-e2u5pw",
+    "storage_bucket": "fin-calcu-e2u5pw.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:353683293917:android:151741809b7860d34c7d34",
+        "android_client_info": {
+          "package_name": "com.kartik.fincalc"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBd87pkYmr3WE5Cjw6s8czAT6dLj2IKUFM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
