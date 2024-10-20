@@ -85,104 +85,10 @@ class _ReceptionistShowWidgetState extends State<ReceptionistShowWidget>
     context.watch<FFAppState>();
 
     return SingleChildScrollView(
+      primary: false,
       child: Column(
         mainAxisSize: MainAxisSize.max,
         children: [
-          if (responsiveVisibility(
-            context: context,
-            phone: false,
-            tablet: false,
-            tabletLandscape: false,
-            desktop: false,
-          ))
-            Material(
-              color: Colors.transparent,
-              elevation: 4.0,
-              child: Container(
-                width: MediaQuery.sizeOf(context).width * 1.0,
-                height: 80.0,
-                decoration: const BoxDecoration(
-                  color: Colors.white,
-                ),
-                child: Align(
-                  alignment: const AlignmentDirectional(0.0, -1.0),
-                  child: Padding(
-                    padding:
-                        const EdgeInsetsDirectional.fromSTEB(16.0, 24.0, 16.0, 3.0),
-                    child: Row(
-                      mainAxisSize: MainAxisSize.max,
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Column(
-                          mainAxisSize: MainAxisSize.max,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            const Icon(
-                              Icons.home,
-                              color: Color(0xFF666666),
-                              size: 28.0,
-                            ),
-                            Text(
-                              'Home',
-                              style: FlutterFlowTheme.of(context)
-                                  .bodySmall
-                                  .override(
-                                    fontFamily: 'Inter',
-                                    color: const Color(0xFF666666),
-                                    letterSpacing: 0.0,
-                                  ),
-                            ),
-                          ],
-                        ),
-                        Column(
-                          mainAxisSize: MainAxisSize.max,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            const Icon(
-                              Icons.list,
-                              color: Color(0xFF4B39EF),
-                              size: 28.0,
-                            ),
-                            Text(
-                              'Data',
-                              style: FlutterFlowTheme.of(context)
-                                  .bodySmall
-                                  .override(
-                                    fontFamily: 'Inter',
-                                    color: const Color(0xFF4B39EF),
-                                    letterSpacing: 0.0,
-                                  ),
-                            ),
-                          ],
-                        ),
-                        Column(
-                          mainAxisSize: MainAxisSize.max,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            const Icon(
-                              Icons.settings,
-                              color: Color(0xFF666666),
-                              size: 28.0,
-                            ),
-                            Text(
-                              'Settings',
-                              style: FlutterFlowTheme.of(context)
-                                  .bodySmall
-                                  .override(
-                                    fontFamily: 'Inter',
-                                    color: const Color(0xFF666666),
-                                    letterSpacing: 0.0,
-                                  ),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ),
-            ),
           Align(
             alignment: const AlignmentDirectional(0.0, -1.0),
             child: Container(

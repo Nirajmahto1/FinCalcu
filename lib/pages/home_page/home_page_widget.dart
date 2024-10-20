@@ -28,7 +28,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
     SchedulerBinding.instance.addPostFrameCallback((_) async {
       if (currentUserEmail != '') {
         if (FFAppState().role == 'user') {
-          context.pushNamed(
+          context.goNamed(
             'Show',
             extra: <String, dynamic>{
               kTransitionInfoKey: const TransitionInfo(
@@ -38,7 +38,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
             },
           );
         } else if (FFAppState().role == 'admin') {
-          context.pushNamed(
+          context.goNamed(
             'RecepShow',
             extra: <String, dynamic>{
               kTransitionInfoKey: const TransitionInfo(
@@ -48,7 +48,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
             },
           );
         } else {
-          context.pushNamed(
+          context.goNamed(
             'RecepShow',
             extra: <String, dynamic>{
               kTransitionInfoKey: const TransitionInfo(

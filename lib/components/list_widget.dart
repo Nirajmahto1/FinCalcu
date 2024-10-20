@@ -269,7 +269,7 @@ class _ListWidgetState extends State<ListWidget> with TickerProviderStateMixin {
                                     kTransitionInfoKey: const TransitionInfo(
                                       hasTransition: true,
                                       transitionType:
-                                          PageTransitionType.leftToRight,
+                                          PageTransitionType.topToBottom,
                                       duration: Duration(milliseconds: 800),
                                     ),
                                   },

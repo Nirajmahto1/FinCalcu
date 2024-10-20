@@ -87,6 +87,7 @@ class _DetailsWidgetState extends State<DetailsWidget> {
             key: scaffoldKey,
             backgroundColor: Colors.white,
             body: SingleChildScrollView(
+              primary: false,
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
@@ -732,6 +733,10 @@ class _DetailsWidgetState extends State<DetailsWidget> {
                                                   .secondary,
                                         ),
                                       );
+                                      if (Navigator.of(context).canPop()) {
+                                        context.pop();
+                                      }
+                                      context.pushNamed('fulllis');
                                     },
                                     text: 'Reject Request',
                                     options: FFButtonOptions(

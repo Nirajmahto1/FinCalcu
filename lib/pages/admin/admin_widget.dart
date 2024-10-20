@@ -60,6 +60,7 @@ class _AdminWidgetState extends State<AdminWidget> {
           children: [
             Expanded(
               child: SingleChildScrollView(
+                primary: false,
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
