@@ -1,9 +1,9 @@
 import '/flutter_flow/flutter_flow_util.dart';
-import 'update_details_widget.dart' show UpdateDetailsWidget;
+import 'editplans_widget.dart' show EditplansWidget;
 import 'package:flutter/material.dart';
 
-class UpdateDetailsModel extends FlutterFlowModel<UpdateDetailsWidget> {
-  ///  State fields for stateful widgets in this component.
+class EditplansModel extends FlutterFlowModel<EditplansWidget> {
+  ///  State fields for stateful widgets in this page.
 
   // State field(s) for TextField widget.
   FocusNode? textFieldFocusNode1;
@@ -21,10 +21,8 @@ class UpdateDetailsModel extends FlutterFlowModel<UpdateDetailsWidget> {
   FocusNode? textFieldFocusNode4;
   TextEditingController? textController4;
   String? Function(BuildContext, String?)? textController4Validator;
-  // State field(s) for TextField widget.
-  FocusNode? textFieldFocusNode5;
-  TextEditingController? textController5;
-  String? Function(BuildContext, String?)? textController5Validator;
+  // State field(s) for Switch widget.
+  bool? switchValue;
 
   @override
   void initState(BuildContext context) {}
@@ -42,8 +40,5 @@ class UpdateDetailsModel extends FlutterFlowModel<UpdateDetailsWidget> {
 
     textFieldFocusNode4?.dispose();
     textController4?.dispose();
-
-    textFieldFocusNode5?.dispose();
-    textController5?.dispose();
   }
 }

@@ -1,12 +1,10 @@
 import '/backend/backend.dart';
 import '/components/adminpanell_widget.dart';
 import '/components/extradscomp_widget.dart';
-import '/flutter_flow/flutter_flow_animations.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_animate/flutter_animate.dart';
 import 'package:provider/provider.dart';
 import 'receptionist_show_model.dart';
 export 'receptionist_show_model.dart';
@@ -18,11 +16,8 @@ class ReceptionistShowWidget extends StatefulWidget {
   State<ReceptionistShowWidget> createState() => _ReceptionistShowWidgetState();
 }
 
-class _ReceptionistShowWidgetState extends State<ReceptionistShowWidget>
-    with TickerProviderStateMixin {
+class _ReceptionistShowWidgetState extends State<ReceptionistShowWidget> {
   late ReceptionistShowModel _model;
-
-  final animationsMap = <String, AnimationInfo>{};
 
   @override
   void setState(VoidCallback callback) {
@@ -34,41 +29,6 @@ class _ReceptionistShowWidgetState extends State<ReceptionistShowWidget>
   void initState() {
     super.initState();
     _model = createModel(context, () => ReceptionistShowModel());
-
-    animationsMap.addAll({
-      'containerOnActionTriggerAnimation1': AnimationInfo(
-        trigger: AnimationTrigger.onActionTrigger,
-        applyInitialState: true,
-        effectsBuilder: () => [
-          MoveEffect(
-            curve: Curves.linear,
-            delay: 0.0.ms,
-            duration: 600.0.ms,
-            begin: const Offset(0.0, 0.0),
-            end: const Offset(-400.0, 0.0),
-          ),
-        ],
-      ),
-      'containerOnActionTriggerAnimation2': AnimationInfo(
-        trigger: AnimationTrigger.onActionTrigger,
-        applyInitialState: true,
-        effectsBuilder: () => [
-          MoveEffect(
-            curve: Curves.easeInOut,
-            delay: 0.0.ms,
-            duration: 600.0.ms,
-            begin: const Offset(0.0, 0.0),
-            end: const Offset(400.0, 0.0),
-          ),
-        ],
-      ),
-    });
-    setupAnimations(
-      animationsMap.values.where((anim) =>
-          anim.trigger == AnimationTrigger.onActionTrigger ||
-          !anim.applyInitialState),
-      this,
-    );
 
     WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
   }
@@ -135,6 +95,162 @@ class _ReceptionistShowWidgetState extends State<ReceptionistShowWidget>
                             child: const AdminpanellWidget(),
                           ),
                         ),
+                      if (FFAppState().role == 'recep')
+                        Align(
+                          alignment: const AlignmentDirectional(0.0, 0.0),
+                          child: Material(
+                            color: Colors.transparent,
+                            elevation: 18.0,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(18.0),
+                            ),
+                            child: Container(
+                              width: MediaQuery.sizeOf(context).width * 0.99,
+                              height: 70.0,
+                              decoration: BoxDecoration(
+                                color: FlutterFlowTheme.of(context).accent4,
+                                borderRadius: BorderRadius.circular(18.0),
+                              ),
+                              child: Align(
+                                alignment: const AlignmentDirectional(0.0, 0.0),
+                                child: Row(
+                                  mainAxisSize: MainAxisSize.max,
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: [
+                                    Flexible(
+                                      child: Container(
+                                        height:
+                                            MediaQuery.sizeOf(context).height *
+                                                1.0,
+                                        decoration: BoxDecoration(
+                                          color: FlutterFlowTheme.of(context)
+                                              .secondaryBackground,
+                                          borderRadius: const BorderRadius.only(
+                                            bottomLeft: Radius.circular(18.0),
+                                            bottomRight: Radius.circular(0.0),
+                                            topLeft: Radius.circular(18.0),
+                                            topRight: Radius.circular(0.0),
+                                          ),
+                                        ),
+                                        child: Padding(
+                                          padding:
+                                              const EdgeInsetsDirectional.fromSTEB(
+                                                  10.0, 0.0, 0.0, 0.0),
+                                          child: InkWell(
+                                            splashColor: Colors.transparent,
+                                            focusColor: Colors.transparent,
+                                            hoverColor: Colors.transparent,
+                                            highlightColor: Colors.transparent,
+                                            onTap: () async {
+                                              context.pushNamed(
+                                                'myprofile',
+                                                extra: <String, dynamic>{
+                                                  kTransitionInfoKey:
+                                                      const TransitionInfo(
+                                                    hasTransition: true,
+                                                    transitionType:
+                                                        PageTransitionType
+                                                            .topToBottom,
+                                                  ),
+                                                },
+                                              );
+                                            },
+                                            child: Row(
+                                              mainAxisSize: MainAxisSize.max,
+                                              children: [
+                                                Padding(
+                                                  padding: const EdgeInsetsDirectional
+                                                      .fromSTEB(
+                                                          0.0, 0.0, 5.0, 0.0),
+                                                  child: Icon(
+                                                    Icons.person,
+                                                    color: FlutterFlowTheme.of(
+                                                            context)
+                                                        .primaryText,
+                                                    size: 30.0,
+                                                  ),
+                                                ),
+                                                Text(
+                                                  'My Profile',
+                                                  style: FlutterFlowTheme.of(
+                                                          context)
+                                                      .bodyMedium
+                                                      .override(
+                                                        fontFamily: 'Inter',
+                                                        fontSize: 18.0,
+                                                        letterSpacing: 0.0,
+                                                        fontWeight:
+                                                            FontWeight.w600,
+                                                      ),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                    Flexible(
+                                      child: Container(
+                                        height:
+                                            MediaQuery.sizeOf(context).height *
+                                                1.0,
+                                        decoration: BoxDecoration(
+                                          color: FlutterFlowTheme.of(context)
+                                              .secondaryBackground,
+                                          borderRadius: const BorderRadius.only(
+                                            bottomLeft: Radius.circular(0.0),
+                                            bottomRight: Radius.circular(18.0),
+                                            topLeft: Radius.circular(0.0),
+                                            topRight: Radius.circular(18.0),
+                                          ),
+                                        ),
+                                        child: InkWell(
+                                          splashColor: Colors.transparent,
+                                          focusColor: Colors.transparent,
+                                          hoverColor: Colors.transparent,
+                                          highlightColor: Colors.transparent,
+                                          onTap: () async {
+                                            context.pushNamed('requests');
+                                          },
+                                          child: Row(
+                                            mainAxisSize: MainAxisSize.max,
+                                            children: [
+                                              Padding(
+                                                padding: const EdgeInsetsDirectional
+                                                    .fromSTEB(
+                                                        0.0, 0.0, 5.0, 0.0),
+                                                child: Icon(
+                                                  Icons.reviews,
+                                                  color: FlutterFlowTheme.of(
+                                                          context)
+                                                      .primaryText,
+                                                  size: 28.0,
+                                                ),
+                                              ),
+                                              Text(
+                                                'My Requests',
+                                                style:
+                                                    FlutterFlowTheme.of(context)
+                                                        .bodyMedium
+                                                        .override(
+                                                          fontFamily: 'Inter',
+                                                          fontSize: 18.0,
+                                                          letterSpacing: 0.0,
+                                                          fontWeight:
+                                                              FontWeight.w600,
+                                                        ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
                       Text(
                         'Our Plans',
                         style:
@@ -166,8 +282,7 @@ class _ReceptionistShowWidgetState extends State<ReceptionistShowWidget>
                                 height: 30.0,
                                 child: CircularProgressIndicator(
                                   valueColor: AlwaysStoppedAnimation<Color>(
-                                    FlutterFlowTheme.of(context)
-                                        .primaryBackground,
+                                    FlutterFlowTheme.of(context).secondaryText,
                                   ),
                                 ),
                               ),
@@ -223,11 +338,25 @@ class _ReceptionistShowWidgetState extends State<ReceptionistShowWidget>
                                                   const Duration(milliseconds: 600),
                                               curve: Curves.easeIn,
                                               child: Text(
-                                                listViewPricesDataRecord
-                                                    .reference.id,
+                                                listViewPricesDataRecord.name,
                                               ),
                                             ),
                                           ],
+                                        ),
+                                        Align(
+                                          alignment:
+                                              const AlignmentDirectional(-1.0, 0.0),
+                                          child: Text(
+                                            listViewPricesDataRecord.details,
+                                            textAlign: TextAlign.start,
+                                            style: FlutterFlowTheme.of(context)
+                                                .bodyMedium
+                                                .override(
+                                                  fontFamily: 'Inter',
+                                                  color: const Color(0xFF333333),
+                                                  letterSpacing: 0.0,
+                                                ),
+                                          ),
                                         ),
                                         Container(
                                           height: 1.0,
@@ -422,25 +551,13 @@ class _ReceptionistShowWidgetState extends State<ReceptionistShowWidget>
                                                             .active
                                                         ? null
                                                         : () async {
-                                                            if (animationsMap[
-                                                                    'containerOnActionTriggerAnimation1'] !=
-                                                                null) {
-                                                              await animationsMap[
-                                                                      'containerOnActionTriggerAnimation1']!
-                                                                  .controller
-                                                                  .forward(
-                                                                      from:
-                                                                          0.0);
-                                                            }
-
                                                             context.pushNamed(
                                                               'form',
                                                               queryParameters: {
                                                                 'name':
                                                                     serializeParam(
                                                                   listViewPricesDataRecord
-                                                                      .reference
-                                                                      .id,
+                                                                      .name,
                                                                   ParamType
                                                                       .String,
                                                                 ),
@@ -458,7 +575,7 @@ class _ReceptionistShowWidgetState extends State<ReceptionistShowWidget>
                                                                       true,
                                                                   transitionType:
                                                                       PageTransitionType
-                                                                          .rightToLeft,
+                                                                          .topToBottom,
                                                                   duration: Duration(
                                                                       milliseconds:
                                                                           900),
@@ -528,9 +645,6 @@ class _ReceptionistShowWidgetState extends State<ReceptionistShowWidget>
                                     ),
                                   ),
                                 ),
-                              ).animateOnActionTrigger(
-                                animationsMap[
-                                    'containerOnActionTriggerAnimation2']!,
                               );
                             },
                           );
@@ -542,8 +656,6 @@ class _ReceptionistShowWidgetState extends State<ReceptionistShowWidget>
                   ),
                 ),
               ),
-            ).animateOnActionTrigger(
-              animationsMap['containerOnActionTriggerAnimation1']!,
             ),
           ),
         ],

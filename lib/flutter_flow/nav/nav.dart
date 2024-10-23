@@ -168,6 +168,36 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           name: 'userList',
           path: '/userList',
           builder: (context, params) => const UserListWidget(),
+        ),
+        FFRoute(
+          name: 'plans',
+          path: '/plans',
+          builder: (context, params) => const PlansWidget(),
+        ),
+        FFRoute(
+          name: 'editplans',
+          path: '/editplans',
+          builder: (context, params) => EditplansWidget(
+            id: params.getParam(
+              'id',
+              ParamType.int,
+            ),
+          ),
+        ),
+        FFRoute(
+          name: 'addplans',
+          path: '/addplans',
+          builder: (context, params) => const AddplansWidget(),
+        ),
+        FFRoute(
+          name: 'myprofile',
+          path: '/myprofile',
+          builder: (context, params) => const MyprofileWidget(),
+        ),
+        FFRoute(
+          name: 'requests',
+          path: '/requests',
+          builder: (context, params) => const RequestsWidget(),
         )
       ].map((r) => r.toRoute(appStateNotifier)).toList(),
     );
@@ -352,14 +382,14 @@ class FFRoute {
                 )
               : builder(context, ffParams);
           final child = appStateNotifier.loading
-              ? Center(
-                  child: SizedBox(
-                    width: 30.0,
-                    height: 30.0,
-                    child: CircularProgressIndicator(
-                      valueColor: AlwaysStoppedAnimation<Color>(
-                        FlutterFlowTheme.of(context).primaryBackground,
-                      ),
+              ? Container(
+                  color: FlutterFlowTheme.of(context).primaryBackground,
+                  child: Center(
+                    child: Image.asset(
+                      'assets/images/Gemini_Generated_Image_vts64hvts64hvts6-modified.png',
+                      width: 200.0,
+                      height: 200.0,
+                      fit: BoxFit.cover,
                     ),
                   ),
                 )

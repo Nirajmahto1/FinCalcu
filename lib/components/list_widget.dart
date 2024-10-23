@@ -81,7 +81,7 @@ class _ListWidgetState extends State<ListWidget> with TickerProviderStateMixin {
               height: 30.0,
               child: CircularProgressIndicator(
                 valueColor: AlwaysStoppedAnimation<Color>(
-                  FlutterFlowTheme.of(context).primaryBackground,
+                  FlutterFlowTheme.of(context).secondaryText,
                 ),
               ),
             ),

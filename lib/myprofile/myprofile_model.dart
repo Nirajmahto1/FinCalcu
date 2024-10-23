@@ -1,8 +1,8 @@
 import '/flutter_flow/flutter_flow_util.dart';
-import 'data_list_widget.dart' show DataListWidget;
+import 'myprofile_widget.dart' show MyprofileWidget;
 import 'package:flutter/material.dart';
 
-class DataListModel extends FlutterFlowModel<DataListWidget> {
+class MyprofileModel extends FlutterFlowModel<MyprofileWidget> {
   @override
   void initState(BuildContext context) {}
 

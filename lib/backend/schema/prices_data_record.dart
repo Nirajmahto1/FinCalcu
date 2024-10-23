@@ -30,10 +30,28 @@ class PricesDataRecord extends FirestoreRecord {
   bool get active => _active ?? false;
   bool hasActive() => _active != null;
 
+  // "id" field.
+  int? _id;
+  int get id => _id ?? 0;
+  bool hasId() => _id != null;
+
+  // "details" field.
+  String? _details;
+  String get details => _details ?? '';
+  bool hasDetails() => _details != null;
+
+  // "name" field.
+  String? _name;
+  String get name => _name ?? '';
+  bool hasName() => _name != null;
+
   void _initializeFields() {
     _price = castToType<int>(snapshotData['price']);
     _discount = castToType<double>(snapshotData['discount']);
     _active = snapshotData['active'] as bool?;
+    _id = castToType<int>(snapshotData['id']);
+    _details = snapshotData['details'] as String?;
+    _name = snapshotData['name'] as String?;
   }
 
   static CollectionReference get collection =>
@@ -74,12 +92,18 @@ Map<String, dynamic> createPricesDataRecordData({
   int? price,
   double? discount,
   bool? active,
+  int? id,
+  String? details,
+  String? name,
 }) {
   final firestoreData = mapToFirestore(
     <String, dynamic>{
       'price': price,
       'discount': discount,
       'active': active,
+      'id': id,
+      'details': details,
+      'name': name,
     }.withoutNulls,
   );
 
@@ -93,12 +117,15 @@ class PricesDataRecordDocumentEquality implements Equality<PricesDataRecord> {
   bool equals(PricesDataRecord? e1, PricesDataRecord? e2) {
     return e1?.price == e2?.price &&
         e1?.discount == e2?.discount &&
-        e1?.active == e2?.active;
+        e1?.active == e2?.active &&
+        e1?.id == e2?.id &&
+        e1?.details == e2?.details &&
+        e1?.name == e2?.name;
   }
 
   @override
-  int hash(PricesDataRecord? e) =>
-      const ListEquality().hash([e?.price, e?.discount, e?.active]);
+  int hash(PricesDataRecord? e) => const ListEquality()
+      .hash([e?.price, e?.discount, e?.active, e?.id, e?.details, e?.name]);
 
   @override
   bool isValidKey(Object? o) => o is PricesDataRecord;

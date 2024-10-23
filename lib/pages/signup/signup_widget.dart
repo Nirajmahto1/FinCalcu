@@ -106,136 +106,139 @@ class _SignupWidgetState extends State<SignupWidget>
                       alignment: const AlignmentDirectional(0.0, 0.0),
                       child: Padding(
                         padding: const EdgeInsetsDirectional.fromSTEB(
-                            24.0, 48.0, 24.0, 0.0),
-                        child: Column(
-                          mainAxisSize: MainAxisSize.min,
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Align(
-                              alignment: const AlignmentDirectional(-1.0, 0.0),
-                              child: Container(
+                            20.0, 48.0, 20.0, 0.0),
+                        child: SingleChildScrollView(
+                          child: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Align(
                                 alignment: const AlignmentDirectional(-1.0, 0.0),
-                                child: Align(
+                                child: Container(
                                   alignment: const AlignmentDirectional(-1.0, 0.0),
-                                  child: Text(
-                                    'Let\'s Create an Account !',
-                                    textAlign: TextAlign.start,
-                                    style: FlutterFlowTheme.of(context)
-                                        .headlineLarge
-                                        .override(
-                                          fontFamily: 'Inter Tight',
-                                          color: Colors.white,
-                                          fontSize: 25.0,
-                                          letterSpacing: 0.0,
-                                          fontWeight: FontWeight.bold,
-                                        ),
+                                  child: Align(
+                                    alignment: const AlignmentDirectional(-1.0, 0.0),
+                                    child: Text(
+                                      'Let\'s Create an Account !',
+                                      textAlign: TextAlign.start,
+                                      style: FlutterFlowTheme.of(context)
+                                          .headlineLarge
+                                          .override(
+                                            fontFamily: 'Inter Tight',
+                                            color: Colors.white,
+                                            fontSize: 25.0,
+                                            letterSpacing: 0.0,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                    ),
                                   ),
                                 ),
                               ),
-                            ),
-                            wrapWithModel(
-                              model: _model.signupmodeModel,
-                              updateCallback: () => safeSetState(() {}),
-                              child: const SignupmodeWidget(),
-                            ),
-                            if (responsiveVisibility(
-                              context: context,
-                              tablet: false,
-                              tabletLandscape: false,
-                            ))
-                              Align(
-                                alignment: const AlignmentDirectional(0.0, 0.0),
-                                child: Text(
-                                  'OR',
-                                  style: FlutterFlowTheme.of(context)
-                                      .bodyLarge
-                                      .override(
-                                        fontFamily: 'Inter',
-                                        color: const Color(0xFFE0E0E0),
-                                        fontSize: 18.0,
-                                        letterSpacing: 0.0,
-                                      ),
-                                ).animateOnActionTrigger(
-                                  animationsMap[
-                                      'textOnActionTriggerAnimation1']!,
-                                ),
+                              wrapWithModel(
+                                model: _model.signupmodeModel,
+                                updateCallback: () => safeSetState(() {}),
+                                child: const SignupmodeWidget(),
                               ),
-                            Align(
-                              alignment: const AlignmentDirectional(0.0, 0.0),
-                              child: InkWell(
-                                splashColor: Colors.transparent,
-                                focusColor: Colors.transparent,
-                                hoverColor: Colors.transparent,
-                                highlightColor: Colors.transparent,
-                                onTap: () async {
-                                  context.pushNamed(
-                                    'Login',
-                                    extra: <String, dynamic>{
-                                      kTransitionInfoKey: const TransitionInfo(
-                                        hasTransition: true,
-                                        transitionType:
-                                            PageTransitionType.topToBottom,
-                                      ),
-                                    },
-                                  );
-                                },
-                                child: RichText(
-                                  textScaler: MediaQuery.of(context).textScaler,
-                                  text: TextSpan(
-                                    children: [
-                                      TextSpan(
-                                        text: 'Already an account? ',
-                                        style: FlutterFlowTheme.of(context)
-                                            .bodyMedium
-                                            .override(
-                                              fontFamily: 'Inter',
-                                              color: const Color(0xFF1E1E1E),
-                                              fontSize: 18.0,
-                                              letterSpacing: 0.0,
-                                              fontWeight: FontWeight.w800,
-                                            ),
-                                      ),
-                                      TextSpan(
-                                        text: 'SignInHere',
-                                        style: FlutterFlowTheme.of(context)
-                                            .bodyMedium
-                                            .override(
-                                              fontFamily: 'Inter',
-                                              color:
-                                                  FlutterFlowTheme.of(context)
-                                                      .primaryBackground,
-                                              fontSize: 18.0,
-                                              letterSpacing: 0.0,
-                                              fontWeight: FontWeight.w500,
-                                            ),
-                                      )
-                                    ],
+                              if (responsiveVisibility(
+                                context: context,
+                                tablet: false,
+                                tabletLandscape: false,
+                              ))
+                                Align(
+                                  alignment: const AlignmentDirectional(0.0, 0.0),
+                                  child: Text(
+                                    'OR',
                                     style: FlutterFlowTheme.of(context)
-                                        .bodyMedium
+                                        .bodyLarge
                                         .override(
                                           fontFamily: 'Inter',
-                                          fontSize: 14.0,
+                                          color: const Color(0xFFE0E0E0),
+                                          fontSize: 18.0,
                                           letterSpacing: 0.0,
                                         ),
+                                  ).animateOnActionTrigger(
+                                    animationsMap[
+                                        'textOnActionTriggerAnimation1']!,
+                                  ),
+                                ),
+                              Align(
+                                alignment: const AlignmentDirectional(0.0, 0.0),
+                                child: InkWell(
+                                  splashColor: Colors.transparent,
+                                  focusColor: Colors.transparent,
+                                  hoverColor: Colors.transparent,
+                                  highlightColor: Colors.transparent,
+                                  onTap: () async {
+                                    context.pushNamed(
+                                      'Login',
+                                      extra: <String, dynamic>{
+                                        kTransitionInfoKey: const TransitionInfo(
+                                          hasTransition: true,
+                                          transitionType:
+                                              PageTransitionType.topToBottom,
+                                        ),
+                                      },
+                                    );
+                                  },
+                                  child: RichText(
+                                    textScaler:
+                                        MediaQuery.of(context).textScaler,
+                                    text: TextSpan(
+                                      children: [
+                                        TextSpan(
+                                          text: 'Already an account? ',
+                                          style: FlutterFlowTheme.of(context)
+                                              .bodyMedium
+                                              .override(
+                                                fontFamily: 'Inter',
+                                                color: const Color(0xFF1E1E1E),
+                                                fontSize: 18.0,
+                                                letterSpacing: 0.0,
+                                                fontWeight: FontWeight.w800,
+                                              ),
+                                        ),
+                                        TextSpan(
+                                          text: 'SignInHere',
+                                          style: FlutterFlowTheme.of(context)
+                                              .bodyMedium
+                                              .override(
+                                                fontFamily: 'Inter',
+                                                color:
+                                                    FlutterFlowTheme.of(context)
+                                                        .primaryBackground,
+                                                fontSize: 18.0,
+                                                letterSpacing: 0.0,
+                                                fontWeight: FontWeight.w500,
+                                              ),
+                                        )
+                                      ],
+                                      style: FlutterFlowTheme.of(context)
+                                          .bodyMedium
+                                          .override(
+                                            fontFamily: 'Inter',
+                                            fontSize: 14.0,
+                                            letterSpacing: 0.0,
+                                          ),
+                                    ),
                                   ),
                                 ),
                               ),
-                            ),
-                            Text(
-                              'By continuing, you agree to our Terms of Service and Privacy Policy',
-                              textAlign: TextAlign.center,
-                              style: FlutterFlowTheme.of(context)
-                                  .bodySmall
-                                  .override(
-                                    fontFamily: 'Inter',
-                                    color: const Color(0xFFA0A0A0),
-                                    letterSpacing: 0.0,
-                                  ),
-                            ).animateOnActionTrigger(
-                              animationsMap['textOnActionTriggerAnimation2']!,
-                            ),
-                          ].divide(const SizedBox(height: 15.0)),
+                              Text(
+                                'By continuing, you agree to our Terms of Service and Privacy Policy',
+                                textAlign: TextAlign.center,
+                                style: FlutterFlowTheme.of(context)
+                                    .bodySmall
+                                    .override(
+                                      fontFamily: 'Inter',
+                                      color: const Color(0xFFA0A0A0),
+                                      letterSpacing: 0.0,
+                                    ),
+                              ).animateOnActionTrigger(
+                                animationsMap['textOnActionTriggerAnimation2']!,
+                              ),
+                            ].divide(const SizedBox(height: 10.0)),
+                          ),
                         ),
                       ),
                     ),

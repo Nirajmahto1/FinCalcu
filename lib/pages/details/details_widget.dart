@@ -251,6 +251,40 @@ class _DetailsWidgetState extends State<DetailsWidget> {
                                               MainAxisAlignment.spaceBetween,
                                           children: [
                                             Text(
+                                              'By Receptionist:',
+                                              style:
+                                                  FlutterFlowTheme.of(context)
+                                                      .bodyLarge
+                                                      .override(
+                                                        fontFamily: 'Inter',
+                                                        color: Colors.black,
+                                                        letterSpacing: 0.0,
+                                                      ),
+                                            ),
+                                            Text(
+                                              detailsUserRequestRecord?.recep ==
+                                                      1
+                                                  ? 'True'
+                                                  : 'False',
+                                              style:
+                                                  FlutterFlowTheme.of(context)
+                                                      .bodyLarge
+                                                      .override(
+                                                        fontFamily: 'Inter',
+                                                        color: Colors.black,
+                                                        letterSpacing: 0.0,
+                                                        fontWeight:
+                                                            FontWeight.w600,
+                                                      ),
+                                            ),
+                                          ],
+                                        ),
+                                        Row(
+                                          mainAxisSize: MainAxisSize.max,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Text(
                                               'Date:',
                                               style:
                                                   FlutterFlowTheme.of(context)

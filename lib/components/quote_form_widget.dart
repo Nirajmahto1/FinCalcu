@@ -1,3 +1,4 @@
+import '/auth/supabase_auth/auth_util.dart';
 import '/backend/backend.dart';
 import '/flutter_flow/flutter_flow_calendar.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
@@ -48,9 +49,6 @@ class _QuoteFormWidgetState extends State<QuoteFormWidget> {
 
     _model.budgetTextController ??= TextEditingController();
     _model.budgetFocusNode ??= FocusNode();
-
-    _model.emailTextController ??= TextEditingController();
-    _model.emailFocusNode ??= FocusNode();
 
     _model.addressTextController ??= TextEditingController();
     _model.addressFocusNode ??= FocusNode();
@@ -359,86 +357,6 @@ class _QuoteFormWidgetState extends State<QuoteFormWidget> {
                           padding: const EdgeInsetsDirectional.fromSTEB(
                               4.0, 0.0, 4.0, 0.0),
                           child: Text(
-                            'Email',
-                            style: FlutterFlowTheme.of(context)
-                                .bodyMedium
-                                .override(
-                                  fontFamily: 'Inter',
-                                  color: FlutterFlowTheme.of(context)
-                                      .secondaryText,
-                                  letterSpacing: 0.0,
-                                ),
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsetsDirectional.fromSTEB(
-                              4.0, 0.0, 4.0, 0.0),
-                          child: TextFormField(
-                            controller: _model.emailTextController,
-                            focusNode: _model.emailFocusNode,
-                            autofocus: false,
-                            textInputAction: TextInputAction.next,
-                            obscureText: false,
-                            decoration: InputDecoration(
-                              hintStyle: FlutterFlowTheme.of(context)
-                                  .bodyLarge
-                                  .override(
-                                    fontFamily: 'Inter',
-                                    letterSpacing: 0.0,
-                                  ),
-                              enabledBorder: OutlineInputBorder(
-                                borderSide: const BorderSide(
-                                  color: Color(0xFFE0E3E7),
-                                  width: 1.0,
-                                ),
-                                borderRadius: BorderRadius.circular(8.0),
-                              ),
-                              focusedBorder: OutlineInputBorder(
-                                borderSide: const BorderSide(
-                                  color: Color(0x00000000),
-                                  width: 1.0,
-                                ),
-                                borderRadius: BorderRadius.circular(8.0),
-                              ),
-                              errorBorder: OutlineInputBorder(
-                                borderSide: const BorderSide(
-                                  color: Color(0x00000000),
-                                  width: 1.0,
-                                ),
-                                borderRadius: BorderRadius.circular(8.0),
-                              ),
-                              focusedErrorBorder: OutlineInputBorder(
-                                borderSide: const BorderSide(
-                                  color: Color(0x00000000),
-                                  width: 1.0,
-                                ),
-                                borderRadius: BorderRadius.circular(8.0),
-                              ),
-                              filled: true,
-                              fillColor: const Color(0xFFF1F4F8),
-                            ),
-                            style: FlutterFlowTheme.of(context)
-                                .bodyMedium
-                                .override(
-                                  fontFamily: 'Inter',
-                                  letterSpacing: 0.0,
-                                ),
-                            minLines: 1,
-                            keyboardType: TextInputType.emailAddress,
-                            validator: _model.emailTextControllerValidator
-                                .asValidator(context),
-                          ),
-                        ),
-                      ],
-                    ),
-                    Column(
-                      mainAxisSize: MainAxisSize.min,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Padding(
-                          padding: const EdgeInsetsDirectional.fromSTEB(
-                              4.0, 0.0, 4.0, 0.0),
-                          child: Text(
                             'Address',
                             style: FlutterFlowTheme.of(context)
                                 .bodyMedium
@@ -581,7 +499,7 @@ class _QuoteFormWidgetState extends State<QuoteFormWidget> {
                       number: int.tryParse(_model.numberTextController.text),
                       name: _model.nameTextController.text,
                       date: _model.calendarSelectedDay?.start,
-                      email: _model.emailTextController.text,
+                      email: currentUserEmail,
                       service: widget.name,
                       approved: 2,
                       active: 2,
@@ -596,7 +514,7 @@ class _QuoteFormWidgetState extends State<QuoteFormWidget> {
                               int.tryParse(_model.numberTextController.text),
                           name: _model.nameTextController.text,
                           date: _model.calendarSelectedDay?.start,
-                          email: _model.emailTextController.text,
+                          email: currentUserEmail,
                           service: widget.name,
                           approved: 2,
                           active: 2,

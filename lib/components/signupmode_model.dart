@@ -16,11 +16,15 @@ class SignupmodeModel extends FlutterFlowModel<SignupmodeWidget> {
   String? Function(BuildContext, String?)? emailTextControllerValidator;
   // State field(s) for TextField widget.
   FocusNode? textFieldFocusNode3;
+  TextEditingController? textController2;
+  String? Function(BuildContext, String?)? textController2Validator;
+  // State field(s) for TextField widget.
+  FocusNode? textFieldFocusNode4;
   TextEditingController? passwordTextController;
   late bool passwordVisibility1;
   String? Function(BuildContext, String?)? passwordTextControllerValidator;
   // State field(s) for TextField widget.
-  FocusNode? textFieldFocusNode4;
+  FocusNode? textFieldFocusNode5;
   TextEditingController? confirmPasswordTextController;
   late bool passwordVisibility2;
   String? Function(BuildContext, String?)?
@@ -43,9 +47,12 @@ class SignupmodeModel extends FlutterFlowModel<SignupmodeWidget> {
     emailTextController?.dispose();
 
     textFieldFocusNode3?.dispose();
-    passwordTextController?.dispose();
+    textController2?.dispose();
 
     textFieldFocusNode4?.dispose();
+    passwordTextController?.dispose();
+
+    textFieldFocusNode5?.dispose();
     confirmPasswordTextController?.dispose();
   }
 }

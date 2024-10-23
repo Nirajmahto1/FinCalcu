@@ -25,10 +25,6 @@ class QuoteFormModel extends FlutterFlowModel<QuoteFormWidget> {
   FocusNode? budgetFocusNode;
   TextEditingController? budgetTextController;
   String? Function(BuildContext, String?)? budgetTextControllerValidator;
-  // State field(s) for email widget.
-  FocusNode? emailFocusNode;
-  TextEditingController? emailTextController;
-  String? Function(BuildContext, String?)? emailTextControllerValidator;
   // State field(s) for address widget.
   FocusNode? addressFocusNode;
   TextEditingController? addressTextController;
@@ -56,9 +52,6 @@ class QuoteFormModel extends FlutterFlowModel<QuoteFormWidget> {
 
     budgetFocusNode?.dispose();
     budgetTextController?.dispose();
-
-    emailFocusNode?.dispose();
-    emailTextController?.dispose();
 
     addressFocusNode?.dispose();
     addressTextController?.dispose();
