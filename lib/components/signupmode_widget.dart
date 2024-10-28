@@ -42,8 +42,6 @@ class _SignupmodeWidgetState extends State<SignupmodeWidget> {
 
     _model.confirmPasswordTextController ??= TextEditingController();
     _model.textFieldFocusNode5 ??= FocusNode();
-
-    WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
   }
 
   @override
@@ -499,74 +497,53 @@ class _SignupmodeWidgetState extends State<SignupmodeWidget> {
               ),
               FFButtonWidget(
                 onPressed: () async {
-                  if ((_model.passwordTextController.text ==
-                          _model.confirmPasswordTextController.text) &&
-                      (_model.emailTextController.text != '')) {
-                    GoRouter.of(context).prepareAuthEvent();
-                    if (_model.passwordTextController.text !=
-                        _model.confirmPasswordTextController.text) {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(
-                          content: Text(
-                            'Passwords don\'t match!',
-                          ),
+                  GoRouter.of(context).prepareAuthEvent();
+                  if (_model.passwordTextController.text !=
+                      _model.confirmPasswordTextController.text) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(
+                        content: Text(
+                          'Passwords don\'t match!',
                         ),
-                      );
-                      return;
-                    }
-
-                    final user = await authManager.createAccountWithEmail(
-                      context,
-                      _model.emailTextController.text,
-                      _model.passwordTextController.text,
+                      ),
                     );
-                    if (user == null) {
-                      return;
-                    }
+                    return;
+                  }
 
-                    _model.usercreatedb = await UsersTable().insert({
-                      'id': currentUserUid,
-                      'created_at':
-                          supaSerialize<DateTime>(getCurrentTimestamp),
-                      'Email': currentUserEmail,
-                      'role': 'user',
-                      'Name': _model.textController1.text,
-                      'Number': int.tryParse(_model.textController2.text),
-                    });
-                    FFAppState().role = _model.usercreatedb!.role!;
-                    safeSetState(() {});
-                    if (currentUserEmail != '') {
-                      context.pushNamedAuth('Show', context.mounted);
-                    } else {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
-                          content: Text(
-                            'Something Went Wrong!',
-                            style: FlutterFlowTheme.of(context)
-                                .bodyMedium
-                                .override(
-                                  fontFamily: 'Roboto',
-                                  color: FlutterFlowTheme.of(context)
-                                      .primaryBackground,
-                                  fontSize: 16.0,
-                                  letterSpacing: 0.0,
-                                ),
-                          ),
-                          duration: const Duration(milliseconds: 4000),
-                          backgroundColor: FlutterFlowTheme.of(context).error,
-                        ),
-                      );
-                    }
+                  final user = await authManager.createAccountWithEmail(
+                    context,
+                    _model.emailTextController.text,
+                    _model.passwordTextController.text,
+                  );
+                  if (user == null) {
+                    return;
+                  }
+
+                  _model.usercreatedb = await UsersTable().insert({
+                    'id': currentUserUid,
+                    'created_at': supaSerialize<DateTime>(getCurrentTimestamp),
+                    'Email': currentUserEmail,
+                    'role': 'user',
+                    'Name': _model.textController1.text,
+                    'Number': _model.textController2.text,
+                  });
+                  FFAppState().role = _model.usercreatedb!.role!;
+                  safeSetState(() {});
+                  if (currentUserEmail != '') {
+                    context.pushNamedAuth('Show', context.mounted);
                   } else {
                     ScaffoldMessenger.of(context).showSnackBar(
                       SnackBar(
                         content: Text(
-                          'Password does\'nt Match !',
-                          style: TextStyle(
-                            color: FlutterFlowTheme.of(context).primaryText,
-                            fontWeight: FontWeight.w600,
-                            fontSize: 16.0,
-                          ),
+                          'Something Went Wrong!',
+                          style:
+                              FlutterFlowTheme.of(context).bodyMedium.override(
+                                    fontFamily: 'Roboto',
+                                    color: FlutterFlowTheme.of(context)
+                                        .primaryBackground,
+                                    fontSize: 16.0,
+                                    letterSpacing: 0.0,
+                                  ),
                         ),
                         duration: const Duration(milliseconds: 4000),
                         backgroundColor: FlutterFlowTheme.of(context).error,

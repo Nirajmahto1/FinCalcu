@@ -29,8 +29,6 @@ class _FormWidgetState extends State<FormWidget> {
   void initState() {
     super.initState();
     _model = createModel(context, () => FormModel());
-
-    WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
   }
 
   @override

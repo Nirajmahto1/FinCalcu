@@ -28,8 +28,6 @@ class _EventWidgetState extends State<EventWidget> {
   void initState() {
     super.initState();
     _model = createModel(context, () => EventModel());
-
-    WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
   }
 
   @override

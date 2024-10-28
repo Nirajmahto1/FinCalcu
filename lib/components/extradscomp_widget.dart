@@ -34,7 +34,6 @@ class _ExtradscompWidgetState extends State<ExtradscompWidget> {
         _model.updatePage(() {});
       },
     );
-    WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
   }
 
   @override

@@ -53,8 +53,6 @@ class _UserlistWidgetState extends State<UserlistWidget>
           !anim.applyInitialState),
       this,
     );
-
-    WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
   }
 
   @override

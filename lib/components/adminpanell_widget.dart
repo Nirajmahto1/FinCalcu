@@ -25,8 +25,6 @@ class _AdminpanellWidgetState extends State<AdminpanellWidget> {
   void initState() {
     super.initState();
     _model = createModel(context, () => AdminpanellModel());
-
-    WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
   }
 
   @override

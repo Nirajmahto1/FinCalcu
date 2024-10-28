@@ -25,8 +25,6 @@ class _RecepShowWidgetState extends State<RecepShowWidget> {
   void initState() {
     super.initState();
     _model = createModel(context, () => RecepShowModel());
-
-    WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
   }
 
   @override

@@ -52,8 +52,6 @@ class _QuoteFormWidgetState extends State<QuoteFormWidget> {
 
     _model.addressTextController ??= TextEditingController();
     _model.addressFocusNode ??= FocusNode();
-
-    WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
   }
 
   @override
@@ -539,16 +537,21 @@ class _QuoteFormWidgetState extends State<QuoteFormWidget> {
                               FlutterFlowTheme.of(context).secondary,
                         ),
                       );
-
-                      context.pushNamed(
-                        'Show',
-                        extra: <String, dynamic>{
-                          kTransitionInfoKey: const TransitionInfo(
-                            hasTransition: true,
-                            transitionType: PageTransitionType.rightToLeft,
-                            duration: Duration(milliseconds: 800),
+                    } else {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text(
+                            'Something Went Wrong!',
+                            style: TextStyle(
+                              color: FlutterFlowTheme.of(context)
+                                  .primaryBackground,
+                              fontWeight: FontWeight.w600,
+                              fontSize: 18.0,
+                            ),
                           ),
-                        },
+                          duration: const Duration(milliseconds: 4000),
+                          backgroundColor: FlutterFlowTheme.of(context).error,
+                        ),
                       );
                     }
 

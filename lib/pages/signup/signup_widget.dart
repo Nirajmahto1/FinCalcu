@@ -68,8 +68,6 @@ class _SignupWidgetState extends State<SignupWidget>
           !anim.applyInitialState),
       this,
     );
-
-    WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
   }
 
   @override
@@ -119,18 +117,22 @@ class _SignupWidgetState extends State<SignupWidget>
                                   alignment: const AlignmentDirectional(-1.0, 0.0),
                                   child: Align(
                                     alignment: const AlignmentDirectional(-1.0, 0.0),
-                                    child: Text(
-                                      'Let\'s Create an Account !',
-                                      textAlign: TextAlign.start,
-                                      style: FlutterFlowTheme.of(context)
-                                          .headlineLarge
-                                          .override(
-                                            fontFamily: 'Inter Tight',
-                                            color: Colors.white,
-                                            fontSize: 25.0,
-                                            letterSpacing: 0.0,
-                                            fontWeight: FontWeight.bold,
-                                          ),
+                                    child: Padding(
+                                      padding: const EdgeInsetsDirectional.fromSTEB(
+                                          0.0, 0.0, 0.0, 5.0),
+                                      child: Text(
+                                        'Let\'s Create an Account !',
+                                        textAlign: TextAlign.start,
+                                        style: FlutterFlowTheme.of(context)
+                                            .headlineLarge
+                                            .override(
+                                              fontFamily: 'Inter Tight',
+                                              color: Colors.white,
+                                              fontSize: 25.0,
+                                              letterSpacing: 0.0,
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                      ),
                                     ),
                                   ),
                                 ),
@@ -224,18 +226,23 @@ class _SignupWidgetState extends State<SignupWidget>
                                   ),
                                 ),
                               ),
-                              Text(
-                                'By continuing, you agree to our Terms of Service and Privacy Policy',
-                                textAlign: TextAlign.center,
-                                style: FlutterFlowTheme.of(context)
-                                    .bodySmall
-                                    .override(
-                                      fontFamily: 'Inter',
-                                      color: const Color(0xFFA0A0A0),
-                                      letterSpacing: 0.0,
-                                    ),
-                              ).animateOnActionTrigger(
-                                animationsMap['textOnActionTriggerAnimation2']!,
+                              Padding(
+                                padding: const EdgeInsetsDirectional.fromSTEB(
+                                    0.0, 5.0, 0.0, 0.0),
+                                child: Text(
+                                  'By continuing, you agree to our Terms of Service and Privacy Policy',
+                                  textAlign: TextAlign.center,
+                                  style: FlutterFlowTheme.of(context)
+                                      .bodySmall
+                                      .override(
+                                        fontFamily: 'Inter',
+                                        color: const Color(0xFFA0A0A0),
+                                        letterSpacing: 0.0,
+                                      ),
+                                ).animateOnActionTrigger(
+                                  animationsMap[
+                                      'textOnActionTriggerAnimation2']!,
+                                ),
                               ),
                             ].divide(const SizedBox(height: 10.0)),
                           ),

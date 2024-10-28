@@ -35,8 +35,6 @@ class _AddplansWidgetState extends State<AddplansWidget> {
 
     _model.textController4 ??= TextEditingController();
     _model.textFieldFocusNode4 ??= FocusNode();
-
-    WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
   }
 
   @override
@@ -54,6 +52,7 @@ class _AddplansWidgetState extends State<AddplansWidget> {
         key: scaffoldKey,
         backgroundColor: FlutterFlowTheme.of(context).primaryText,
         body: SingleChildScrollView(
+          primary: false,
           child: Column(
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.center,

@@ -33,8 +33,6 @@ class _DetailsWidgetState extends State<DetailsWidget> {
     _model = createModel(context, () => DetailsModel());
 
     _model.textFieldFocusNode ??= FocusNode();
-
-    WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
   }
 
   @override
@@ -706,19 +704,6 @@ class _DetailsWidgetState extends State<DetailsWidget> {
                                                   .secondary,
                                         ),
                                       );
-                                      if (Navigator.of(context).canPop()) {
-                                        context.pop();
-                                      }
-                                      context.pushNamed(
-                                        'fulllis',
-                                        extra: <String, dynamic>{
-                                          kTransitionInfoKey: const TransitionInfo(
-                                            hasTransition: true,
-                                            transitionType:
-                                                PageTransitionType.bottomToTop,
-                                          ),
-                                        },
-                                      );
                                     },
                                     text: 'Approve Request',
                                     options: FFButtonOptions(
@@ -767,10 +752,6 @@ class _DetailsWidgetState extends State<DetailsWidget> {
                                                   .secondary,
                                         ),
                                       );
-                                      if (Navigator.of(context).canPop()) {
-                                        context.pop();
-                                      }
-                                      context.pushNamed('fulllis');
                                     },
                                     text: 'Reject Request',
                                     options: FFButtonOptions(

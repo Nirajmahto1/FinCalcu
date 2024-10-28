@@ -21,8 +21,6 @@ class _FulllisWidgetState extends State<FulllisWidget> {
   void initState() {
     super.initState();
     _model = createModel(context, () => FulllisModel());
-
-    WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
   }
 
   @override

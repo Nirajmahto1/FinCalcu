@@ -22,8 +22,6 @@ class _PlansWidgetState extends State<PlansWidget> {
   void initState() {
     super.initState();
     _model = createModel(context, () => PlansModel());
-
-    WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
   }
 
   @override

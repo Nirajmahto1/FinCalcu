@@ -23,8 +23,6 @@ class _MyprofileWidgetState extends State<MyprofileWidget> {
   void initState() {
     super.initState();
     _model = createModel(context, () => MyprofileModel());
-
-    WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
   }
 
   @override
@@ -235,8 +233,7 @@ class _MyprofileWidgetState extends State<MyprofileWidget> {
                                               Text(
                                                 valueOrDefault<String>(
                                                   myprofileUsersRowList
-                                                      .first.number
-                                                      ?.toString(),
+                                                      .first.number,
                                                   '0000000000',
                                                 ),
                                                 style:

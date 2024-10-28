@@ -22,8 +22,6 @@ class _RequestsWidgetState extends State<RequestsWidget> {
   void initState() {
     super.initState();
     _model = createModel(context, () => RequestsModel());
-
-    WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
   }
 
   @override
