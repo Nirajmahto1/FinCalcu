@@ -1,7 +1,11 @@
 # FinCalcu
 
-A new Flutter project.
+An app made in Flutter to maintain the records,booking and every needs of an Service Based Company.
 
 ## Getting Started
 
-FlutterFlow projects are built to run on the Flutter _stable_ release.
+Includes
+- Admin Page
+- Receptionist Page
+- User Page
+- Booking Page
