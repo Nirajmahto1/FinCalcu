@@ -1,6 +1,6 @@
 import '/components/userlist_widget.dart';
-import '/flutter_flow/flutter_flow_theme.dart';
-import '/flutter_flow/flutter_flow_util.dart';
+import '/core/app_theme.dart';
+import '/core/app_utils.dart';
 import 'package:flutter/material.dart';
 import 'user_list_model.dart';
 export 'user_list_model.dart';

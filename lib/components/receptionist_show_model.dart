@@ -1,6 +1,6 @@
 import '/components/adminpanell_widget.dart';
 import '/components/extradscomp_widget.dart';
-import '/flutter_flow/flutter_flow_util.dart';
+import '/core/app_utils.dart';
 import 'receptionist_show_widget.dart' show ReceptionistShowWidget;
 import 'package:flutter/material.dart';
 

@@ -1,7 +1,7 @@
 import '/auth/supabase_auth/auth_util.dart';
 import '/components/receptionist_show_widget.dart';
-import '/flutter_flow/flutter_flow_theme.dart';
-import '/flutter_flow/flutter_flow_util.dart';
+import '/core/app_theme.dart';
+import '/core/app_utils.dart';
 import 'package:flutter/material.dart';
 import 'recep_show_model.dart';
 export 'recep_show_model.dart';

@@ -1,5 +1,5 @@
 import '/backend/supabase/supabase.dart';
-import '/flutter_flow/flutter_flow_util.dart';
+import '/core/app_utils.dart';
 import 'signupmode_widget.dart' show SignupmodeWidget;
 import 'package:flutter/material.dart';
 

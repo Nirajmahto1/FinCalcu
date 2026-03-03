@@ -1,5 +1,5 @@
 import '/components/list_widget.dart';
-import '/flutter_flow/flutter_flow_util.dart';
+import '/core/app_utils.dart';
 import 'fulllis_widget.dart' show FulllisWidget;
 import 'package:flutter/material.dart';
 

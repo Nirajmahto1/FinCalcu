@@ -1,7 +1,7 @@
 import '/backend/backend.dart';
 import '/components/quote_form_widget.dart';
-import '/flutter_flow/flutter_flow_theme.dart';
-import '/flutter_flow/flutter_flow_util.dart';
+import '/core/app_theme.dart';
+import '/core/app_utils.dart';
 import 'package:flutter/material.dart';
 import 'form_model.dart';
 export 'form_model.dart';

@@ -1,4 +1,4 @@
-import '/flutter_flow/flutter_flow_util.dart';
+import '/core/app_utils.dart';
 import 'details_widget.dart' show DetailsWidget;
 import 'package:flutter/material.dart';
 
