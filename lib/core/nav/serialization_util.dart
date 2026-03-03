@@ -6,8 +6,8 @@ import '/backend/backend.dart';
 
 import '/backend/supabase/supabase.dart';
 
-import '../../flutter_flow/place.dart';
-import '../../flutter_flow/uploaded_file.dart';
+import '../../core/place.dart';
+import '../../core/uploaded_file.dart';
 
 /// SERIALIZATION HELPERS
 

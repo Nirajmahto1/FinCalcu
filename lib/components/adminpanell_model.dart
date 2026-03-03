@@ -1,4 +1,4 @@
-import '/flutter_flow/flutter_flow_util.dart';
+import '/core/app_utils.dart';
 import 'adminpanell_widget.dart' show AdminpanellWidget;
 import 'package:flutter/material.dart';
 

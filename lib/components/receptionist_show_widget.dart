@@ -1,9 +1,9 @@
 import '/backend/backend.dart';
 import '/components/adminpanell_widget.dart';
 import '/components/extradscomp_widget.dart';
-import '/flutter_flow/flutter_flow_theme.dart';
-import '/flutter_flow/flutter_flow_util.dart';
-import '/flutter_flow/flutter_flow_widgets.dart';
+import '/core/app_theme.dart';
+import '/core/app_utils.dart';
+import '/core/app_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'receptionist_show_model.dart';

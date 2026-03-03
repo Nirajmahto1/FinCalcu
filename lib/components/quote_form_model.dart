@@ -1,6 +1,6 @@
 import '/backend/backend.dart';
-import '/flutter_flow/flutter_flow_calendar.dart';
-import '/flutter_flow/flutter_flow_util.dart';
+import '/core/app_calendar.dart';
+import '/core/app_utils.dart';
 import 'quote_form_widget.dart' show QuoteFormWidget;
 import 'package:flutter/material.dart';
 

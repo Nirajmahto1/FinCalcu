@@ -1,5 +1,5 @@
 import '/components/receptionist_show_widget.dart';
-import '/flutter_flow/flutter_flow_util.dart';
+import '/core/app_utils.dart';
 import 'recep_show_widget.dart' show RecepShowWidget;
 import 'package:flutter/material.dart';
 

@@ -1,6 +1,6 @@
 import '/components/list_widget.dart';
-import '/flutter_flow/flutter_flow_theme.dart';
-import '/flutter_flow/flutter_flow_util.dart';
+import '/core/app_theme.dart';
+import '/core/app_utils.dart';
 import 'package:flutter/material.dart';
 import 'fulllis_model.dart';
 export 'fulllis_model.dart';

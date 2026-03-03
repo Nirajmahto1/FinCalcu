@@ -1,5 +1,5 @@
 import '/components/signupmode_widget.dart';
-import '/flutter_flow/flutter_flow_util.dart';
+import '/core/app_utils.dart';
 import 'signup_widget.dart' show SignupWidget;
 import 'package:flutter/material.dart';
 

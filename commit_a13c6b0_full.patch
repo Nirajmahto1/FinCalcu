@@ -1,0 +1,877 @@
+commit a13c6b0e006b633e1d4acf091b1ea6e6fb67c528
+Author: Codex <codex@openai.com>
+Date:   Tue Mar 3 07:27:44 2026 +0000
+
+    Refactor: migrate FlutterFlow support layer to neutral core module
+    
+    ### Motivation
+    - Remove FlutterFlow-specific pathing/branding and consolidate generated support utilities into a neutral `lib/core` module to make the codebase more idiomatic for hand-maintained Flutter code.
+    - Provide clearer, app-centric names for shared utilities and widgets to ease future manual conversion from FlutterFlow-generated widgets to pure Flutter implementations.
+    - Reduce coupling between generated scaffolding and app code by centralizing exports and improving import consistency across pages, components and backend code.
+    
+    ### Description
+    - Moved the `lib/flutter_flow/` folder into `lib/core/` and renamed key files to neutral, app-centric names (for example `flutter_flow_util.dart` → `app_utils.dart`, `flutter_flow_theme.dart` → `app_theme.dart`, `flutter_flow_widgets.dart` → `app_widgets.dart`, `flutter_flow_model.dart` → `app_model.dart`, `flutter_flow_animations.dart` → `app_animations.dart`, `flutter_flow_calendar.dart` → `app_calendar.dart`).
+    - Updated import/export paths across the app, including pages, components, backend schema and supabase database layers, to reference the new `/core/...` files and adjusted relative imports in the navigation serialization helpers to use `core/place.dart` and `core/uploaded_file.dart`.
+    - Updated `lib/backend/schema/index.dart` and other schema/backend files to export/import `core/lat_lng.dart` where appropriate.
+    - Preserved existing runtime logic and API surface (no functional refactors), only renames and import path updates to the generated support layer.
+    
+    ### Testing
+    - Ran a repository-wide search for old `flutter_flow` import paths in `lib/` and verified they were removed from source files under `lib/` using `rg`/search checks, which succeeded.
+    - Performed a local inspection of updated files to ensure imports and exports were consistently updated; no runtime behavior changes were introduced by the rename-only refactor.
+    - Attempted to run `dart format` and `flutter --version` in this environment, but the Dart/Flutter CLIs are not available so `dart`/`flutter` commands could not be executed here.
+---
+ lib/auth/supabase_auth/supabase_auth_manager.dart                 | 2 +-
+ lib/backend/schema/index.dart                                     | 2 +-
+ lib/backend/schema/prices_data_record.dart                        | 2 +-
+ lib/backend/schema/user_request_record.dart                       | 2 +-
+ lib/backend/schema/users_record.dart                              | 2 +-
+ lib/backend/schema/util/firestore_util.dart                       | 2 +-
+ lib/backend/schema/util/schema_util.dart                          | 2 +-
+ lib/backend/supabase/database/database.dart                       | 2 +-
+ lib/components/adminpanell_model.dart                             | 2 +-
+ lib/components/adminpanell_widget.dart                            | 4 ++--
+ lib/components/extradscomp_model.dart                             | 2 +-
+ lib/components/extradscomp_widget.dart                            | 4 ++--
+ lib/components/list_model.dart                                    | 2 +-
+ lib/components/list_widget.dart                                   | 8 ++++----
+ lib/components/quote_form_model.dart                              | 4 ++--
+ lib/components/quote_form_widget.dart                             | 8 ++++----
+ lib/components/receptionist_show_model.dart                       | 2 +-
+ lib/components/receptionist_show_widget.dart                      | 6 +++---
+ lib/components/signupmode_model.dart                              | 2 +-
+ lib/components/signupmode_widget.dart                             | 6 +++---
+ lib/components/userlist_model.dart                                | 2 +-
+ lib/components/userlist_widget.dart                               | 8 ++++----
+ .../flutter_flow_animations.dart => core/app_animations.dart}     | 0
+ .../flutter_flow_calendar.dart => core/app_calendar.dart}         | 0
+ lib/{flutter_flow/flutter_flow_model.dart => core/app_model.dart} | 0
+ lib/{flutter_flow/flutter_flow_theme.dart => core/app_theme.dart} | 0
+ lib/{flutter_flow/flutter_flow_util.dart => core/app_utils.dart}  | 2 +-
+ .../flutter_flow_widgets.dart => core/app_widgets.dart}           | 0
+ lib/{flutter_flow => core}/form_field_controller.dart             | 0
+ lib/{flutter_flow => core}/lat_lng.dart                           | 0
+ lib/{flutter_flow => core}/nav/nav.dart                           | 4 ++--
+ lib/{flutter_flow => core}/nav/serialization_util.dart            | 4 ++--
+ lib/{flutter_flow => core}/place.dart                             | 0
+ lib/{flutter_flow => core}/uploaded_file.dart                     | 0
+ lib/main.dart                                                     | 2 +-
+ lib/pages/addplans/addplans_model.dart                            | 2 +-
+ lib/pages/addplans/addplans_widget.dart                           | 6 +++---
+ lib/pages/admin/admin_model.dart                                  | 2 +-
+ lib/pages/admin/admin_widget.dart                                 | 6 +++---
+ lib/pages/details/details_model.dart                              | 2 +-
+ lib/pages/details/details_widget.dart                             | 6 +++---
+ lib/pages/editplans/editplans_model.dart                          | 2 +-
+ lib/pages/editplans/editplans_widget.dart                         | 6 +++---
+ lib/pages/event/event_model.dart                                  | 2 +-
+ lib/pages/event/event_widget.dart                                 | 6 +++---
+ lib/pages/form/form_model.dart                                    | 2 +-
+ lib/pages/form/form_widget.dart                                   | 4 ++--
+ lib/pages/fulllis/fulllis_model.dart                              | 2 +-
+ lib/pages/fulllis/fulllis_widget.dart                             | 4 ++--
+ lib/pages/home_page/home_page_model.dart                          | 2 +-
+ lib/pages/home_page/home_page_widget.dart                         | 4 ++--
+ lib/pages/login/login_model.dart                                  | 2 +-
+ lib/pages/login/login_widget.dart                                 | 6 +++---
+ lib/pages/myprofile/myprofile_model.dart                          | 2 +-
+ lib/pages/myprofile/myprofile_widget.dart                         | 6 +++---
+ lib/pages/plans/plans_model.dart                                  | 2 +-
+ lib/pages/plans/plans_widget.dart                                 | 6 +++---
+ lib/pages/recep_show/recep_show_model.dart                        | 2 +-
+ lib/pages/recep_show/recep_show_widget.dart                       | 4 ++--
+ lib/pages/requests/requests_model.dart                            | 2 +-
+ lib/pages/requests/requests_widget.dart                           | 4 ++--
+ lib/pages/show/show_model.dart                                    | 2 +-
+ lib/pages/show/show_widget.dart                                   | 6 +++---
+ lib/pages/signup/signup_model.dart                                | 2 +-
+ lib/pages/signup/signup_widget.dart                               | 6 +++---
+ lib/pages/user_list/user_list_model.dart                          | 2 +-
+ lib/pages/user_list/user_list_widget.dart                         | 4 ++--
+ 67 files changed, 102 insertions(+), 102 deletions(-)
+
+diff --git a/lib/auth/supabase_auth/supabase_auth_manager.dart b/lib/auth/supabase_auth/supabase_auth_manager.dart
+index 712cc4b..1676b9f 100644
+--- a/lib/auth/supabase_auth/supabase_auth_manager.dart
++++ b/lib/auth/supabase_auth/supabase_auth_manager.dart
+@@ -3,7 +3,7 @@ import 'dart:async';
+ import 'package:flutter/material.dart';
+ import '/auth/auth_manager.dart';
+ import '/backend/supabase/supabase.dart';
+-import '/flutter_flow/flutter_flow_util.dart';
++import '/core/app_utils.dart';
+ import 'email_auth.dart';
+ 
+ import 'supabase_user_provider.dart';
+diff --git a/lib/backend/schema/index.dart b/lib/backend/schema/index.dart
+index 2ca74a1..ba4e687 100644
+--- a/lib/backend/schema/index.dart
++++ b/lib/backend/schema/index.dart
+@@ -1,3 +1,3 @@
+ export 'package:cloud_firestore/cloud_firestore.dart' hide Order;
+ export 'package:flutter/material.dart' show Color, Colors;
+-export '/flutter_flow/lat_lng.dart';
++export '/core/lat_lng.dart';
+diff --git a/lib/backend/schema/prices_data_record.dart b/lib/backend/schema/prices_data_record.dart
+index dd42d02..39eeeee 100644
+--- a/lib/backend/schema/prices_data_record.dart
++++ b/lib/backend/schema/prices_data_record.dart
+@@ -5,7 +5,7 @@ import 'package:collection/collection.dart';
+ import '/backend/schema/util/firestore_util.dart';
+ 
+ import 'index.dart';
+-import '/flutter_flow/flutter_flow_util.dart';
++import '/core/app_utils.dart';
+ 
+ class PricesDataRecord extends FirestoreRecord {
+   PricesDataRecord._(
+diff --git a/lib/backend/schema/user_request_record.dart b/lib/backend/schema/user_request_record.dart
+index 7d1b3ff..ef59e4b 100644
+--- a/lib/backend/schema/user_request_record.dart
++++ b/lib/backend/schema/user_request_record.dart
+@@ -5,7 +5,7 @@ import 'package:collection/collection.dart';
+ import '/backend/schema/util/firestore_util.dart';
+ 
+ import 'index.dart';
+-import '/flutter_flow/flutter_flow_util.dart';
++import '/core/app_utils.dart';
+ 
+ class UserRequestRecord extends FirestoreRecord {
+   UserRequestRecord._(
+diff --git a/lib/backend/schema/users_record.dart b/lib/backend/schema/users_record.dart
+index 6730247..da0e1f8 100644
+--- a/lib/backend/schema/users_record.dart
++++ b/lib/backend/schema/users_record.dart
+@@ -5,7 +5,7 @@ import 'package:collection/collection.dart';
+ import '/backend/schema/util/firestore_util.dart';
+ 
+ import 'index.dart';
+-import '/flutter_flow/flutter_flow_util.dart';
++import '/core/app_utils.dart';
+ 
+ class UsersRecord extends FirestoreRecord {
+   UsersRecord._(
+diff --git a/lib/backend/schema/util/firestore_util.dart b/lib/backend/schema/util/firestore_util.dart
+index be1fab5..699ddcf 100644
+--- a/lib/backend/schema/util/firestore_util.dart
++++ b/lib/backend/schema/util/firestore_util.dart
+@@ -1,7 +1,7 @@
+ import 'package:cloud_firestore/cloud_firestore.dart';
+ 
+ import '/backend/schema/util/schema_util.dart';
+-import '/flutter_flow/flutter_flow_util.dart';
++import '/core/app_utils.dart';
+ 
+ typedef RecordBuilder<T> = T Function(DocumentSnapshot snapshot);
+ 
+diff --git a/lib/backend/schema/util/schema_util.dart b/lib/backend/schema/util/schema_util.dart
+index 27213df..192715d 100644
+--- a/lib/backend/schema/util/schema_util.dart
++++ b/lib/backend/schema/util/schema_util.dart
+@@ -3,7 +3,7 @@ import 'dart:convert';
+ import 'package:flutter/material.dart';
+ import 'package:from_css_color/from_css_color.dart';
+ 
+-import '/flutter_flow/flutter_flow_util.dart';
++import '/core/app_utils.dart';
+ 
+ export 'package:collection/collection.dart' show ListEquality;
+ export 'package:flutter/material.dart' show Color, Colors;
+diff --git a/lib/backend/supabase/database/database.dart b/lib/backend/supabase/database/database.dart
+index a712755..eab414a 100644
+--- a/lib/backend/supabase/database/database.dart
++++ b/lib/backend/supabase/database/database.dart
+@@ -1,4 +1,4 @@
+-export '../../../flutter_flow/lat_lng.dart';
++export '../../../core/lat_lng.dart';
+ export 'package:supabase_flutter/supabase_flutter.dart' hide Provider;
+ 
+ export '../supabase.dart';
+diff --git a/lib/components/adminpanell_model.dart b/lib/components/adminpanell_model.dart
+index 5e26998..a1d86a4 100644
+--- a/lib/components/adminpanell_model.dart
++++ b/lib/components/adminpanell_model.dart
+@@ -1,4 +1,4 @@
+-import '/flutter_flow/flutter_flow_util.dart';
++import '/core/app_utils.dart';
+ import 'adminpanell_widget.dart' show AdminpanellWidget;
+ import 'package:flutter/material.dart';
+ 
+diff --git a/lib/components/adminpanell_widget.dart b/lib/components/adminpanell_widget.dart
+index 4e1534d..4eecdcf 100644
+--- a/lib/components/adminpanell_widget.dart
++++ b/lib/components/adminpanell_widget.dart
+@@ -1,5 +1,5 @@
+-import '/flutter_flow/flutter_flow_theme.dart';
+-import '/flutter_flow/flutter_flow_util.dart';
++import '/core/app_theme.dart';
++import '/core/app_utils.dart';
+ import 'package:flutter/material.dart';
+ import 'adminpanell_model.dart';
+ export 'adminpanell_model.dart';
+diff --git a/lib/components/extradscomp_model.dart b/lib/components/extradscomp_model.dart
+index 1d930fd..d033459 100644
+--- a/lib/components/extradscomp_model.dart
++++ b/lib/components/extradscomp_model.dart
+@@ -1,4 +1,4 @@
+-import '/flutter_flow/flutter_flow_util.dart';
++import '/core/app_utils.dart';
+ import 'extradscomp_widget.dart' show ExtradscompWidget;
+ import 'package:flutter/material.dart';
+ 
+diff --git a/lib/components/extradscomp_widget.dart b/lib/components/extradscomp_widget.dart
+index 8c25332..bde1389 100644
+--- a/lib/components/extradscomp_widget.dart
++++ b/lib/components/extradscomp_widget.dart
+@@ -1,5 +1,5 @@
+-import '/flutter_flow/flutter_flow_theme.dart';
+-import '/flutter_flow/flutter_flow_util.dart';
++import '/core/app_theme.dart';
++import '/core/app_utils.dart';
+ import 'package:easy_debounce/easy_debounce.dart';
+ import 'package:flutter/material.dart';
+ import 'extradscomp_model.dart';
+diff --git a/lib/components/list_model.dart b/lib/components/list_model.dart
+index 5dd1af8..e49d42f 100644
+--- a/lib/components/list_model.dart
++++ b/lib/components/list_model.dart
+@@ -1,4 +1,4 @@
+-import '/flutter_flow/flutter_flow_util.dart';
++import '/core/app_utils.dart';
+ import 'list_widget.dart' show ListWidget;
+ import 'package:flutter/material.dart';
+ 
+diff --git a/lib/components/list_widget.dart b/lib/components/list_widget.dart
+index 4d9cc85..b91b774 100644
+--- a/lib/components/list_widget.dart
++++ b/lib/components/list_widget.dart
+@@ -1,8 +1,8 @@
+ import '/backend/backend.dart';
+-import '/flutter_flow/flutter_flow_animations.dart';
+-import '/flutter_flow/flutter_flow_theme.dart';
+-import '/flutter_flow/flutter_flow_util.dart';
+-import '/flutter_flow/flutter_flow_widgets.dart';
++import '/core/app_animations.dart';
++import '/core/app_theme.dart';
++import '/core/app_utils.dart';
++import '/core/app_widgets.dart';
+ import 'package:flutter/material.dart';
+ import 'package:flutter_animate/flutter_animate.dart';
+ import 'list_model.dart';
+diff --git a/lib/components/quote_form_model.dart b/lib/components/quote_form_model.dart
+index cbfb022..40d67bd 100644
+--- a/lib/components/quote_form_model.dart
++++ b/lib/components/quote_form_model.dart
+@@ -1,6 +1,6 @@
+ import '/backend/backend.dart';
+-import '/flutter_flow/flutter_flow_calendar.dart';
+-import '/flutter_flow/flutter_flow_util.dart';
++import '/core/app_calendar.dart';
++import '/core/app_utils.dart';
+ import 'quote_form_widget.dart' show QuoteFormWidget;
+ import 'package:flutter/material.dart';
+ 
+diff --git a/lib/components/quote_form_widget.dart b/lib/components/quote_form_widget.dart
+index a94641d..0c1674a 100644
+--- a/lib/components/quote_form_widget.dart
++++ b/lib/components/quote_form_widget.dart
+@@ -1,9 +1,9 @@
+ import '/auth/supabase_auth/auth_util.dart';
+ import '/backend/backend.dart';
+-import '/flutter_flow/flutter_flow_calendar.dart';
+-import '/flutter_flow/flutter_flow_theme.dart';
+-import '/flutter_flow/flutter_flow_util.dart';
+-import '/flutter_flow/flutter_flow_widgets.dart';
++import '/core/app_calendar.dart';
++import '/core/app_theme.dart';
++import '/core/app_utils.dart';
++import '/core/app_widgets.dart';
+ import 'package:flutter/material.dart';
+ import 'package:flutter/services.dart';
+ import 'quote_form_model.dart';
+diff --git a/lib/components/receptionist_show_model.dart b/lib/components/receptionist_show_model.dart
+index e165998..7ef0c88 100644
+--- a/lib/components/receptionist_show_model.dart
++++ b/lib/components/receptionist_show_model.dart
+@@ -1,6 +1,6 @@
+ import '/components/adminpanell_widget.dart';
+ import '/components/extradscomp_widget.dart';
+-import '/flutter_flow/flutter_flow_util.dart';
++import '/core/app_utils.dart';
+ import 'receptionist_show_widget.dart' show ReceptionistShowWidget;
+ import 'package:flutter/material.dart';
+ 
+diff --git a/lib/components/receptionist_show_widget.dart b/lib/components/receptionist_show_widget.dart
+index d6fe84e..a89c53e 100644
+--- a/lib/components/receptionist_show_widget.dart
++++ b/lib/components/receptionist_show_widget.dart
+@@ -1,9 +1,9 @@
+ import '/backend/backend.dart';
+ import '/components/adminpanell_widget.dart';
+ import '/components/extradscomp_widget.dart';
+-import '/flutter_flow/flutter_flow_theme.dart';
+-import '/flutter_flow/flutter_flow_util.dart';
+-import '/flutter_flow/flutter_flow_widgets.dart';
++import '/core/app_theme.dart';
++import '/core/app_utils.dart';
++import '/core/app_widgets.dart';
+ import 'package:flutter/material.dart';
+ import 'package:provider/provider.dart';
+ import 'receptionist_show_model.dart';
+diff --git a/lib/components/signupmode_model.dart b/lib/components/signupmode_model.dart
+index 1324939..4c3752e 100644
+--- a/lib/components/signupmode_model.dart
++++ b/lib/components/signupmode_model.dart
+@@ -1,5 +1,5 @@
+ import '/backend/supabase/supabase.dart';
+-import '/flutter_flow/flutter_flow_util.dart';
++import '/core/app_utils.dart';
+ import 'signupmode_widget.dart' show SignupmodeWidget;
+ import 'package:flutter/material.dart';
+ 
+diff --git a/lib/components/signupmode_widget.dart b/lib/components/signupmode_widget.dart
+index 3593a90..ddf9d7b 100644
+--- a/lib/components/signupmode_widget.dart
++++ b/lib/components/signupmode_widget.dart
+@@ -1,8 +1,8 @@
+ import '/auth/supabase_auth/auth_util.dart';
+ import '/backend/supabase/supabase.dart';
+-import '/flutter_flow/flutter_flow_theme.dart';
+-import '/flutter_flow/flutter_flow_util.dart';
+-import '/flutter_flow/flutter_flow_widgets.dart';
++import '/core/app_theme.dart';
++import '/core/app_utils.dart';
++import '/core/app_widgets.dart';
+ import 'package:flutter/material.dart';
+ import 'signupmode_model.dart';
+ export 'signupmode_model.dart';
+diff --git a/lib/components/userlist_model.dart b/lib/components/userlist_model.dart
+index 9b464b7..0b11deb 100644
+--- a/lib/components/userlist_model.dart
++++ b/lib/components/userlist_model.dart
+@@ -1,5 +1,5 @@
+ import '/backend/supabase/supabase.dart';
+-import '/flutter_flow/flutter_flow_util.dart';
++import '/core/app_utils.dart';
+ import 'userlist_widget.dart' show UserlistWidget;
+ import 'package:flutter/material.dart';
+ 
+diff --git a/lib/components/userlist_widget.dart b/lib/components/userlist_widget.dart
+index e25bba2..6413a5b 100644
+--- a/lib/components/userlist_widget.dart
++++ b/lib/components/userlist_widget.dart
+@@ -1,8 +1,8 @@
+ import '/backend/supabase/supabase.dart';
+-import '/flutter_flow/flutter_flow_animations.dart';
+-import '/flutter_flow/flutter_flow_theme.dart';
+-import '/flutter_flow/flutter_flow_util.dart';
+-import '/flutter_flow/flutter_flow_widgets.dart';
++import '/core/app_animations.dart';
++import '/core/app_theme.dart';
++import '/core/app_utils.dart';
++import '/core/app_widgets.dart';
+ import 'package:flutter/material.dart';
+ import 'package:flutter_animate/flutter_animate.dart';
+ import 'userlist_model.dart';
+diff --git a/lib/flutter_flow/flutter_flow_animations.dart b/lib/core/app_animations.dart
+similarity index 100%
+rename from lib/flutter_flow/flutter_flow_animations.dart
+rename to lib/core/app_animations.dart
+diff --git a/lib/flutter_flow/flutter_flow_calendar.dart b/lib/core/app_calendar.dart
+similarity index 100%
+rename from lib/flutter_flow/flutter_flow_calendar.dart
+rename to lib/core/app_calendar.dart
+diff --git a/lib/flutter_flow/flutter_flow_model.dart b/lib/core/app_model.dart
+similarity index 100%
+rename from lib/flutter_flow/flutter_flow_model.dart
+rename to lib/core/app_model.dart
+diff --git a/lib/flutter_flow/flutter_flow_theme.dart b/lib/core/app_theme.dart
+similarity index 100%
+rename from lib/flutter_flow/flutter_flow_theme.dart
+rename to lib/core/app_theme.dart
+diff --git a/lib/flutter_flow/flutter_flow_util.dart b/lib/core/app_utils.dart
+similarity index 99%
+rename from lib/flutter_flow/flutter_flow_util.dart
+rename to lib/core/app_utils.dart
+index e34407d..54ac95a 100644
+--- a/lib/flutter_flow/flutter_flow_util.dart
++++ b/lib/core/app_utils.dart
+@@ -22,7 +22,7 @@ export 'place.dart';
+ export 'uploaded_file.dart';
+ export '../app_state.dart';
+ export '../app_constants.dart';
+-export 'flutter_flow_model.dart';
++export 'app_model.dart';
+ export 'dart:math' show min, max;
+ export 'dart:typed_data' show Uint8List;
+ export 'dart:convert' show jsonEncode, jsonDecode;
+diff --git a/lib/flutter_flow/flutter_flow_widgets.dart b/lib/core/app_widgets.dart
+similarity index 100%
+rename from lib/flutter_flow/flutter_flow_widgets.dart
+rename to lib/core/app_widgets.dart
+diff --git a/lib/flutter_flow/form_field_controller.dart b/lib/core/form_field_controller.dart
+similarity index 100%
+rename from lib/flutter_flow/form_field_controller.dart
+rename to lib/core/form_field_controller.dart
+diff --git a/lib/flutter_flow/lat_lng.dart b/lib/core/lat_lng.dart
+similarity index 100%
+rename from lib/flutter_flow/lat_lng.dart
+rename to lib/core/lat_lng.dart
+diff --git a/lib/flutter_flow/nav/nav.dart b/lib/core/nav/nav.dart
+similarity index 99%
+rename from lib/flutter_flow/nav/nav.dart
+rename to lib/core/nav/nav.dart
+index e1173bc..2f944c9 100644
+--- a/lib/flutter_flow/nav/nav.dart
++++ b/lib/core/nav/nav.dart
+@@ -7,8 +7,8 @@ import 'package:provider/provider.dart';
+ import '/auth/base_auth_user_provider.dart';
+ 
+ import '/index.dart';
+-import '/flutter_flow/flutter_flow_theme.dart';
+-import '/flutter_flow/flutter_flow_util.dart';
++import '/core/app_theme.dart';
++import '/core/app_utils.dart';
+ 
+ export 'package:go_router/go_router.dart';
+ export 'serialization_util.dart';
+diff --git a/lib/flutter_flow/nav/serialization_util.dart b/lib/core/nav/serialization_util.dart
+similarity index 98%
+rename from lib/flutter_flow/nav/serialization_util.dart
+rename to lib/core/nav/serialization_util.dart
+index 66c2dc4..15c2e11 100644
+--- a/lib/flutter_flow/nav/serialization_util.dart
++++ b/lib/core/nav/serialization_util.dart
+@@ -6,8 +6,8 @@ import '/backend/backend.dart';
+ 
+ import '/backend/supabase/supabase.dart';
+ 
+-import '../../flutter_flow/place.dart';
+-import '../../flutter_flow/uploaded_file.dart';
++import '../../core/place.dart';
++import '../../core/uploaded_file.dart';
+ 
+ /// SERIALIZATION HELPERS
+ 
+diff --git a/lib/flutter_flow/place.dart b/lib/core/place.dart
+similarity index 100%
+rename from lib/flutter_flow/place.dart
+rename to lib/core/place.dart
+diff --git a/lib/flutter_flow/uploaded_file.dart b/lib/core/uploaded_file.dart
+similarity index 100%
+rename from lib/flutter_flow/uploaded_file.dart
+rename to lib/core/uploaded_file.dart
+diff --git a/lib/main.dart b/lib/main.dart
+index 5af6e07..f062324 100644
+--- a/lib/main.dart
++++ b/lib/main.dart
+@@ -9,7 +9,7 @@ import 'auth/supabase_auth/auth_util.dart';
+ 
+ import '/backend/supabase/supabase.dart';
+ import 'backend/firebase/firebase_config.dart';
+-import 'flutter_flow/flutter_flow_util.dart';
++import 'core/app_utils.dart';
+ 
+ void main() async {
+   WidgetsFlutterBinding.ensureInitialized();
+diff --git a/lib/pages/addplans/addplans_model.dart b/lib/pages/addplans/addplans_model.dart
+index f0779e0..2445d38 100644
+--- a/lib/pages/addplans/addplans_model.dart
++++ b/lib/pages/addplans/addplans_model.dart
+@@ -1,4 +1,4 @@
+-import '/flutter_flow/flutter_flow_util.dart';
++import '/core/app_utils.dart';
+ import 'addplans_widget.dart' show AddplansWidget;
+ import 'package:flutter/material.dart';
+ 
+diff --git a/lib/pages/addplans/addplans_widget.dart b/lib/pages/addplans/addplans_widget.dart
+index 376ddc2..5eb16bc 100644
+--- a/lib/pages/addplans/addplans_widget.dart
++++ b/lib/pages/addplans/addplans_widget.dart
+@@ -1,7 +1,7 @@
+ import '/backend/backend.dart';
+-import '/flutter_flow/flutter_flow_theme.dart';
+-import '/flutter_flow/flutter_flow_util.dart';
+-import '/flutter_flow/flutter_flow_widgets.dart';
++import '/core/app_theme.dart';
++import '/core/app_utils.dart';
++import '/core/app_widgets.dart';
+ import 'package:flutter/material.dart';
+ import 'addplans_model.dart';
+ export 'addplans_model.dart';
+diff --git a/lib/pages/admin/admin_model.dart b/lib/pages/admin/admin_model.dart
+index 1994648..aebde6f 100644
+--- a/lib/pages/admin/admin_model.dart
++++ b/lib/pages/admin/admin_model.dart
+@@ -1,4 +1,4 @@
+-import '/flutter_flow/flutter_flow_util.dart';
++import '/core/app_utils.dart';
+ import 'admin_widget.dart' show AdminWidget;
+ import 'package:flutter/material.dart';
+ 
+diff --git a/lib/pages/admin/admin_widget.dart b/lib/pages/admin/admin_widget.dart
+index 84acfd1..4a3c067 100644
+--- a/lib/pages/admin/admin_widget.dart
++++ b/lib/pages/admin/admin_widget.dart
+@@ -1,9 +1,9 @@
+ import '/auth/supabase_auth/auth_util.dart';
+ import '/backend/backend.dart';
+ import '/backend/supabase/supabase.dart';
+-import '/flutter_flow/flutter_flow_theme.dart';
+-import '/flutter_flow/flutter_flow_util.dart';
+-import '/flutter_flow/flutter_flow_widgets.dart';
++import '/core/app_theme.dart';
++import '/core/app_utils.dart';
++import '/core/app_widgets.dart';
+ import 'package:flutter/material.dart';
+ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+ import 'admin_model.dart';
+diff --git a/lib/pages/details/details_model.dart b/lib/pages/details/details_model.dart
+index f75702c..49d068a 100644
+--- a/lib/pages/details/details_model.dart
++++ b/lib/pages/details/details_model.dart
+@@ -1,4 +1,4 @@
+-import '/flutter_flow/flutter_flow_util.dart';
++import '/core/app_utils.dart';
+ import 'details_widget.dart' show DetailsWidget;
+ import 'package:flutter/material.dart';
+ 
+diff --git a/lib/pages/details/details_widget.dart b/lib/pages/details/details_widget.dart
+index e8c1be7..02b936d 100644
+--- a/lib/pages/details/details_widget.dart
++++ b/lib/pages/details/details_widget.dart
+@@ -1,7 +1,7 @@
+ import '/backend/backend.dart';
+-import '/flutter_flow/flutter_flow_theme.dart';
+-import '/flutter_flow/flutter_flow_util.dart';
+-import '/flutter_flow/flutter_flow_widgets.dart';
++import '/core/app_theme.dart';
++import '/core/app_utils.dart';
++import '/core/app_widgets.dart';
+ import 'package:flutter/material.dart';
+ import 'package:url_launcher/url_launcher.dart';
+ import 'details_model.dart';
+diff --git a/lib/pages/editplans/editplans_model.dart b/lib/pages/editplans/editplans_model.dart
+index 3a11d5c..136348c 100644
+--- a/lib/pages/editplans/editplans_model.dart
++++ b/lib/pages/editplans/editplans_model.dart
+@@ -1,4 +1,4 @@
+-import '/flutter_flow/flutter_flow_util.dart';
++import '/core/app_utils.dart';
+ import 'editplans_widget.dart' show EditplansWidget;
+ import 'package:flutter/material.dart';
+ 
+diff --git a/lib/pages/editplans/editplans_widget.dart b/lib/pages/editplans/editplans_widget.dart
+index f8a1691..650c4d2 100644
+--- a/lib/pages/editplans/editplans_widget.dart
++++ b/lib/pages/editplans/editplans_widget.dart
+@@ -1,7 +1,7 @@
+ import '/backend/backend.dart';
+-import '/flutter_flow/flutter_flow_theme.dart';
+-import '/flutter_flow/flutter_flow_util.dart';
+-import '/flutter_flow/flutter_flow_widgets.dart';
++import '/core/app_theme.dart';
++import '/core/app_utils.dart';
++import '/core/app_widgets.dart';
+ import 'package:flutter/material.dart';
+ import 'editplans_model.dart';
+ export 'editplans_model.dart';
+diff --git a/lib/pages/event/event_model.dart b/lib/pages/event/event_model.dart
+index 74d0f94..7e73d56 100644
+--- a/lib/pages/event/event_model.dart
++++ b/lib/pages/event/event_model.dart
+@@ -1,4 +1,4 @@
+-import '/flutter_flow/flutter_flow_util.dart';
++import '/core/app_utils.dart';
+ import 'event_widget.dart' show EventWidget;
+ import 'package:flutter/material.dart';
+ 
+diff --git a/lib/pages/event/event_widget.dart b/lib/pages/event/event_widget.dart
+index 5d6ae92..c5e202a 100644
+--- a/lib/pages/event/event_widget.dart
++++ b/lib/pages/event/event_widget.dart
+@@ -1,7 +1,7 @@
+ import '/backend/backend.dart';
+-import '/flutter_flow/flutter_flow_theme.dart';
+-import '/flutter_flow/flutter_flow_util.dart';
+-import '/flutter_flow/flutter_flow_widgets.dart';
++import '/core/app_theme.dart';
++import '/core/app_utils.dart';
++import '/core/app_widgets.dart';
+ import 'package:flutter/material.dart';
+ import 'package:url_launcher/url_launcher.dart';
+ import 'event_model.dart';
+diff --git a/lib/pages/form/form_model.dart b/lib/pages/form/form_model.dart
+index 245ab58..633feb3 100644
+--- a/lib/pages/form/form_model.dart
++++ b/lib/pages/form/form_model.dart
+@@ -1,5 +1,5 @@
+ import '/components/quote_form_widget.dart';
+-import '/flutter_flow/flutter_flow_util.dart';
++import '/core/app_utils.dart';
+ import 'form_widget.dart' show FormWidget;
+ import 'package:flutter/material.dart';
+ 
+diff --git a/lib/pages/form/form_widget.dart b/lib/pages/form/form_widget.dart
+index 743eb7d..a600460 100644
+--- a/lib/pages/form/form_widget.dart
++++ b/lib/pages/form/form_widget.dart
+@@ -1,7 +1,7 @@
+ import '/backend/backend.dart';
+ import '/components/quote_form_widget.dart';
+-import '/flutter_flow/flutter_flow_theme.dart';
+-import '/flutter_flow/flutter_flow_util.dart';
++import '/core/app_theme.dart';
++import '/core/app_utils.dart';
+ import 'package:flutter/material.dart';
+ import 'form_model.dart';
+ export 'form_model.dart';
+diff --git a/lib/pages/fulllis/fulllis_model.dart b/lib/pages/fulllis/fulllis_model.dart
+index eb1c4d4..13d4613 100644
+--- a/lib/pages/fulllis/fulllis_model.dart
++++ b/lib/pages/fulllis/fulllis_model.dart
+@@ -1,5 +1,5 @@
+ import '/components/list_widget.dart';
+-import '/flutter_flow/flutter_flow_util.dart';
++import '/core/app_utils.dart';
+ import 'fulllis_widget.dart' show FulllisWidget;
+ import 'package:flutter/material.dart';
+ 
+diff --git a/lib/pages/fulllis/fulllis_widget.dart b/lib/pages/fulllis/fulllis_widget.dart
+index 4ab6b07..6330ebb 100644
+--- a/lib/pages/fulllis/fulllis_widget.dart
++++ b/lib/pages/fulllis/fulllis_widget.dart
+@@ -1,6 +1,6 @@
+ import '/components/list_widget.dart';
+-import '/flutter_flow/flutter_flow_theme.dart';
+-import '/flutter_flow/flutter_flow_util.dart';
++import '/core/app_theme.dart';
++import '/core/app_utils.dart';
+ import 'package:flutter/material.dart';
+ import 'fulllis_model.dart';
+ export 'fulllis_model.dart';
+diff --git a/lib/pages/home_page/home_page_model.dart b/lib/pages/home_page/home_page_model.dart
+index d13700f..7bc1905 100644
+--- a/lib/pages/home_page/home_page_model.dart
++++ b/lib/pages/home_page/home_page_model.dart
+@@ -1,4 +1,4 @@
+-import '/flutter_flow/flutter_flow_util.dart';
++import '/core/app_utils.dart';
+ import 'home_page_widget.dart' show HomePageWidget;
+ import 'package:flutter/material.dart';
+ 
+diff --git a/lib/pages/home_page/home_page_widget.dart b/lib/pages/home_page/home_page_widget.dart
+index 4e8549d..a0091bd 100644
+--- a/lib/pages/home_page/home_page_widget.dart
++++ b/lib/pages/home_page/home_page_widget.dart
+@@ -1,6 +1,6 @@
+ import '/auth/supabase_auth/auth_util.dart';
+-import '/flutter_flow/flutter_flow_theme.dart';
+-import '/flutter_flow/flutter_flow_util.dart';
++import '/core/app_theme.dart';
++import '/core/app_utils.dart';
+ import 'package:flutter/material.dart';
+ import 'package:flutter/scheduler.dart';
+ import 'package:provider/provider.dart';
+diff --git a/lib/pages/login/login_model.dart b/lib/pages/login/login_model.dart
+index 3d9d782..f68e560 100644
+--- a/lib/pages/login/login_model.dart
++++ b/lib/pages/login/login_model.dart
+@@ -1,5 +1,5 @@
+ import '/backend/supabase/supabase.dart';
+-import '/flutter_flow/flutter_flow_util.dart';
++import '/core/app_utils.dart';
+ import 'login_widget.dart' show LoginWidget;
+ import 'package:flutter/material.dart';
+ 
+diff --git a/lib/pages/login/login_widget.dart b/lib/pages/login/login_widget.dart
+index 6f91e31..09c20fe 100644
+--- a/lib/pages/login/login_widget.dart
++++ b/lib/pages/login/login_widget.dart
+@@ -1,8 +1,8 @@
+ import '/auth/supabase_auth/auth_util.dart';
+ import '/backend/supabase/supabase.dart';
+-import '/flutter_flow/flutter_flow_theme.dart';
+-import '/flutter_flow/flutter_flow_util.dart';
+-import '/flutter_flow/flutter_flow_widgets.dart';
++import '/core/app_theme.dart';
++import '/core/app_utils.dart';
++import '/core/app_widgets.dart';
+ import 'package:flutter/material.dart';
+ import 'login_model.dart';
+ export 'login_model.dart';
+diff --git a/lib/pages/myprofile/myprofile_model.dart b/lib/pages/myprofile/myprofile_model.dart
+index 557c896..bebea38 100644
+--- a/lib/pages/myprofile/myprofile_model.dart
++++ b/lib/pages/myprofile/myprofile_model.dart
+@@ -1,4 +1,4 @@
+-import '/flutter_flow/flutter_flow_util.dart';
++import '/core/app_utils.dart';
+ import 'myprofile_widget.dart' show MyprofileWidget;
+ import 'package:flutter/material.dart';
+ 
+diff --git a/lib/pages/myprofile/myprofile_widget.dart b/lib/pages/myprofile/myprofile_widget.dart
+index 2a96404..a9cd2c8 100644
+--- a/lib/pages/myprofile/myprofile_widget.dart
++++ b/lib/pages/myprofile/myprofile_widget.dart
+@@ -1,8 +1,8 @@
+ import '/auth/supabase_auth/auth_util.dart';
+ import '/backend/supabase/supabase.dart';
+-import '/flutter_flow/flutter_flow_theme.dart';
+-import '/flutter_flow/flutter_flow_util.dart';
+-import '/flutter_flow/flutter_flow_widgets.dart';
++import '/core/app_theme.dart';
++import '/core/app_utils.dart';
++import '/core/app_widgets.dart';
+ import 'package:flutter/material.dart';
+ import 'myprofile_model.dart';
+ export 'myprofile_model.dart';
+diff --git a/lib/pages/plans/plans_model.dart b/lib/pages/plans/plans_model.dart
+index 493d3a8..1782a7d 100644
+--- a/lib/pages/plans/plans_model.dart
++++ b/lib/pages/plans/plans_model.dart
+@@ -1,4 +1,4 @@
+-import '/flutter_flow/flutter_flow_util.dart';
++import '/core/app_utils.dart';
+ import 'plans_widget.dart' show PlansWidget;
+ import 'package:flutter/material.dart';
+ 
+diff --git a/lib/pages/plans/plans_widget.dart b/lib/pages/plans/plans_widget.dart
+index ba89575..cf8a191 100644
+--- a/lib/pages/plans/plans_widget.dart
++++ b/lib/pages/plans/plans_widget.dart
+@@ -1,7 +1,7 @@
+ import '/backend/backend.dart';
+-import '/flutter_flow/flutter_flow_theme.dart';
+-import '/flutter_flow/flutter_flow_util.dart';
+-import '/flutter_flow/flutter_flow_widgets.dart';
++import '/core/app_theme.dart';
++import '/core/app_utils.dart';
++import '/core/app_widgets.dart';
+ import 'package:flutter/material.dart';
+ import 'plans_model.dart';
+ export 'plans_model.dart';
+diff --git a/lib/pages/recep_show/recep_show_model.dart b/lib/pages/recep_show/recep_show_model.dart
+index d64a74d..b58a615 100644
+--- a/lib/pages/recep_show/recep_show_model.dart
++++ b/lib/pages/recep_show/recep_show_model.dart
+@@ -1,5 +1,5 @@
+ import '/components/receptionist_show_widget.dart';
+-import '/flutter_flow/flutter_flow_util.dart';
++import '/core/app_utils.dart';
+ import 'recep_show_widget.dart' show RecepShowWidget;
+ import 'package:flutter/material.dart';
+ 
+diff --git a/lib/pages/recep_show/recep_show_widget.dart b/lib/pages/recep_show/recep_show_widget.dart
+index e619af0..9d8067a 100644
+--- a/lib/pages/recep_show/recep_show_widget.dart
++++ b/lib/pages/recep_show/recep_show_widget.dart
+@@ -1,7 +1,7 @@
+ import '/auth/supabase_auth/auth_util.dart';
+ import '/components/receptionist_show_widget.dart';
+-import '/flutter_flow/flutter_flow_theme.dart';
+-import '/flutter_flow/flutter_flow_util.dart';
++import '/core/app_theme.dart';
++import '/core/app_utils.dart';
+ import 'package:flutter/material.dart';
+ import 'recep_show_model.dart';
+ export 'recep_show_model.dart';
+diff --git a/lib/pages/requests/requests_model.dart b/lib/pages/requests/requests_model.dart
+index 73ef5fc..ce5538f 100644
+--- a/lib/pages/requests/requests_model.dart
++++ b/lib/pages/requests/requests_model.dart
+@@ -1,4 +1,4 @@
+-import '/flutter_flow/flutter_flow_util.dart';
++import '/core/app_utils.dart';
+ import 'requests_widget.dart' show RequestsWidget;
+ import 'package:flutter/material.dart';
+ 
+diff --git a/lib/pages/requests/requests_widget.dart b/lib/pages/requests/requests_widget.dart
+index 65b0fbb..57d1965 100644
+--- a/lib/pages/requests/requests_widget.dart
++++ b/lib/pages/requests/requests_widget.dart
+@@ -1,7 +1,7 @@
+ import '/auth/supabase_auth/auth_util.dart';
+ import '/backend/backend.dart';
+-import '/flutter_flow/flutter_flow_theme.dart';
+-import '/flutter_flow/flutter_flow_util.dart';
++import '/core/app_theme.dart';
++import '/core/app_utils.dart';
+ import 'package:flutter/material.dart';
+ import 'requests_model.dart';
+ export 'requests_model.dart';
+diff --git a/lib/pages/show/show_model.dart b/lib/pages/show/show_model.dart
+index dba567b..bb0cabd 100644
+--- a/lib/pages/show/show_model.dart
++++ b/lib/pages/show/show_model.dart
+@@ -1,4 +1,4 @@
+-import '/flutter_flow/flutter_flow_util.dart';
++import '/core/app_utils.dart';
+ import 'show_widget.dart' show ShowWidget;
+ import 'package:flutter/material.dart';
+ 
+diff --git a/lib/pages/show/show_widget.dart b/lib/pages/show/show_widget.dart
+index d86e387..cff90a9 100644
+--- a/lib/pages/show/show_widget.dart
++++ b/lib/pages/show/show_widget.dart
+@@ -1,8 +1,8 @@
+ import '/auth/supabase_auth/auth_util.dart';
+ import '/backend/backend.dart';
+-import '/flutter_flow/flutter_flow_theme.dart';
+-import '/flutter_flow/flutter_flow_util.dart';
+-import '/flutter_flow/flutter_flow_widgets.dart';
++import '/core/app_theme.dart';
++import '/core/app_utils.dart';
++import '/core/app_widgets.dart';
+ import 'package:flutter/material.dart';
+ import 'show_model.dart';
+ export 'show_model.dart';
+diff --git a/lib/pages/signup/signup_model.dart b/lib/pages/signup/signup_model.dart
+index 46c4102..21f4d41 100644
+--- a/lib/pages/signup/signup_model.dart
++++ b/lib/pages/signup/signup_model.dart
+@@ -1,5 +1,5 @@
+ import '/components/signupmode_widget.dart';
+-import '/flutter_flow/flutter_flow_util.dart';
++import '/core/app_utils.dart';
+ import 'signup_widget.dart' show SignupWidget;
+ import 'package:flutter/material.dart';
+ 
+diff --git a/lib/pages/signup/signup_widget.dart b/lib/pages/signup/signup_widget.dart
+index cd8dbe8..0b37b99 100644
+--- a/lib/pages/signup/signup_widget.dart
++++ b/lib/pages/signup/signup_widget.dart
+@@ -1,7 +1,7 @@
+ import '/components/signupmode_widget.dart';
+-import '/flutter_flow/flutter_flow_animations.dart';
+-import '/flutter_flow/flutter_flow_theme.dart';
+-import '/flutter_flow/flutter_flow_util.dart';
++import '/core/app_animations.dart';
++import '/core/app_theme.dart';
++import '/core/app_utils.dart';
+ import 'package:flutter/material.dart';
+ import 'package:flutter_animate/flutter_animate.dart';
+ import 'signup_model.dart';
+diff --git a/lib/pages/user_list/user_list_model.dart b/lib/pages/user_list/user_list_model.dart
+index 68d8b9d..4db5cb0 100644
+--- a/lib/pages/user_list/user_list_model.dart
++++ b/lib/pages/user_list/user_list_model.dart
+@@ -1,5 +1,5 @@
+ import '/components/userlist_widget.dart';
+-import '/flutter_flow/flutter_flow_util.dart';
++import '/core/app_utils.dart';
+ import 'user_list_widget.dart' show UserListWidget;
+ import 'package:flutter/material.dart';
+ 
+diff --git a/lib/pages/user_list/user_list_widget.dart b/lib/pages/user_list/user_list_widget.dart
+index 23b3577..4f18410 100644
+--- a/lib/pages/user_list/user_list_widget.dart
++++ b/lib/pages/user_list/user_list_widget.dart
+@@ -1,6 +1,6 @@
+ import '/components/userlist_widget.dart';
+-import '/flutter_flow/flutter_flow_theme.dart';
+-import '/flutter_flow/flutter_flow_util.dart';
++import '/core/app_theme.dart';
++import '/core/app_utils.dart';
+ import 'package:flutter/material.dart';
+ import 'user_list_model.dart';
+ export 'user_list_model.dart';
